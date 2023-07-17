@@ -3,6 +3,5 @@
     "port": 0,
     "user": "...",
     "password": "...",
-    "database": "...",
-    "quickflow_directory": "..."
+    "database": "..."
 }
