@@ -1,7 +1,8 @@
 {
-    "host": "host",
+    "host": "...",
     "port": 0,
-    "user": "user",
-    "password": "password",
-    "database": "database"
+    "user": "...",
+    "password": "...",
+    "database": "...",
+    "quickflow_directory": "..."
 }
