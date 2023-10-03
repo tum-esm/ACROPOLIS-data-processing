@@ -19,6 +19,7 @@ def plot_sensor_measurement(
             df_f.filter(pl.col("sensor_name") == f"tum-esm-midcost-raspi-{id}")
             .sort(col_time)
             .filter(pl.col(col_name) > 0)
+            .filter(pl.col(col_name) < 700)
             .select(pl.col(col_time, col_name))
         )
 
