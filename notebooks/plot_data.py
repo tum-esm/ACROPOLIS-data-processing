@@ -16,10 +16,10 @@ def plot_sensor_measurement(
     for id in sensor_id:
         df_f = df.clone()
         df_f = (
-            df_f.filter(pl.col("sensor_name") == f"tum-esm-midcost-raspi-{id}")
+            df_f.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
             .sort(col_time)
             .filter(pl.col(col_name) > 0)
-            .filter(pl.col(col_name) < 700)
+            .filter(pl.col(col_name) < 1200)
             .select(pl.col(col_time, col_name))
         )
 
@@ -47,14 +47,14 @@ def plot_sensor_calibration(
     col_name: str,
     col_time: str = "creation_timestamp",
     sensor_id: list = [],
-    filter=None,
+    filter: str | None = None,
     cut_below: float | None = None,
     cut_above: float | None = None,
 ):
     for id in sensor_id:
         df_f = df.clone()
         # select sensor
-        df_f = df_f.filter(pl.col("sensor_name") == f"tum-esm-midcost-raspi-{id}").sort(
+        df_f = df_f.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}").sort(
             col_time
         )
         # filter 0 entries (== sensor fails)
@@ -92,7 +92,7 @@ def plot_sensor_calibration(
 def plot_wind_rose(df, id: int, location: str):
     df_w = df.clone()
     # filter for system
-    df_w = df_w.filter(pl.col("sensor_name") == f"tum-esm-midcost-raspi-{id}").filter(
+    df_w = df_w.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}").filter(
         pl.col("wxt532_direction_avg") > 0
     )
     # create bins for wind direction
