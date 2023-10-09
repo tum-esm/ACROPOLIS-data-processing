@@ -14,9 +14,9 @@ def plot_sensor_measurement(
     filter=None,
 ):
     for id in sensor_id:
-        df_f = df.clone()
+        # df_f = df.clone()
         df_f = (
-            df_f.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
+            df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
             .sort(col_time)
             .filter(pl.col(col_name) > 0)
             .filter(pl.col(col_name) < 1200)
@@ -34,7 +34,7 @@ def plot_sensor_measurement(
     plt.xlabel("Time")
     plt.ylabel(col_name)
     plt.xticks(rotation=45)
-    plt.legend(title="Systems", bbox_to_anchor=(1, 1))
+    # plt.legend(title="Systems", bbox_to_anchor=(1, 1))
     plt.title(label=col_name)
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d.%m %H:%M"))
 
