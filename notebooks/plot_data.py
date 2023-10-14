@@ -28,7 +28,7 @@ def plot_sensor_measurement(
                 pl.all().exclude(col_time).mean()
             )
 
-        sns.lineplot(data=df_f.collect(), x=col_time, y=col_name, label=id)
+        sns.lineplot(data=df_f, x=col_time, y=col_name, label=id)
 
     # set axes labels
     plt.xlabel("Time")
@@ -76,7 +76,7 @@ def plot_sensor_calibration(
             )
 
         # plot
-        sns.lineplot(data=df_f.collect(), x=col_time, y=col_name)
+        sns.lineplot(data=df_f, x=col_time, y=col_name)
 
         # set axes labels
         plt.xlabel("Time")
