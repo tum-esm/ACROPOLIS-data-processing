@@ -111,7 +111,7 @@ def plot_wind_rose(df, id: int, location: str):
     df_w = df_w.groupby(["cardinal_direction", "strength"]).count().sort("strength")
 
     fig = px.bar_polar(
-        df_w.collect(),
+        df_w,
         r="count",
         theta="cardinal_direction",
         color="strength",
