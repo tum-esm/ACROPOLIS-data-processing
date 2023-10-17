@@ -7,15 +7,16 @@ readme = "README.md"
 packages = [{include = "acropolis_visualisation"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-polars = "^0.18.6"
-pendulum = "^2.1.2"
-asyncpg = "^0.28.0"
+python = ">=3.11,<3.13"
+polars = "^0.18.15"
 seaborn = "^0.12.2"
 numpy = "^1.25.0"
 plotly = "^5.15.0"
-pyarrow = "^12.0.1"
 nbformat = "^5.9.0"
+pandas = "^2.1.1"
+datetime = "^5.2"
+matplotlib = "^3.8.0"
+pyarrow = "^13.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
