@@ -43,51 +43,19 @@ def plot_sensor_measurement(
     )
     fig.show()
 
-    # for id in sensor_id:
-    #     # df_f = df.clone()
-    #     df_f = (
-    #         df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
-    #         .sort(col_time)
-    #         .filter(pl.col(col_name) > 0)
-    #         .filter(pl.col(col_name) < 1200)
-    #         .select(pl.col(col_time, col_name))
-    #     )
-
-    #     if filter != None:
-    #         df_f = df_f.groupby_dynamic(col_time, every=filter).agg(
-    #             pl.all().exclude(col_time).mean()
-    #         )
-
-    #     sns.lineplot(data=df_f, x=col_time, y=col_name, label=id)
-
-    # # set axes labels
-    # plt.xlabel("Time")
-    # plt.ylabel(col_name)
-    # plt.xticks(rotation=45)
-    # # plt.legend(title="Systems", bbox_to_anchor=(1, 1))
-    # plt.title(label=col_name)
-    # plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d.%m %H:%M"))
-
-    # # show the plot
-    # plt.show()
-
 
 def plot_sensor_calibration(
     df,
     col_name: str,
-    col_time: str = "creation_timestamp",
     sensor_id: list = [],
     filter: str | None = None,
     cut_below: float | None = None,
     cut_above: float | None = None,
 ):
     for id in sensor_id:
-        df_f = df.clone()
         # select sensor
-        df_f = df_f.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}").sort(
-            col_time
-        )
-        # filter 0 entries (== sensor fails)
+        df_f = df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
+
         df_f = df_f.filter(pl.col(col_name) > 0)
         # additional filters < and >
         if cut_below != None:
@@ -97,26 +65,27 @@ def plot_sensor_calibration(
             df_f = df_f.filter(pl.col(col_name) < cut_above)
 
         # reduce df to relevant columns
-        df_f = df_f.select(pl.col(col_time, col_name))
+        df_f = df_f.select("creation_timestamp", "system_name", col_name)
 
         # apply filter if configured
         if filter != None:
-            df_f = df_f.groupby_dynamic(col_name, every=filter).agg(
-                pl.all().exclude(col_name).mean()
+            df_f = (
+                df_f.sort("creation_timestamp")
+                .groupby_dynamic("creation_timestamp", every=filter)
+                .agg(pl.all().exclude("creation_timestamp").mean())
             )
 
-        # plot
-        sns.lineplot(data=df_f, x=col_time, y=col_name)
+        df_f = df_f.sort("creation_timestamp")
 
-        # set axes labels
-        plt.xlabel("Time")
-        plt.ylabel(col_name)
-        plt.xticks(rotation=45)
-        plt.title(label=f"Calibration: tum-esm-midcost-raspi-{id}")
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d.%m %H:%M"))
-
-        # show the plot
-        plt.show()
+        fig = px.line(
+            df_f,
+            x="creation_timestamp",
+            y=col_name,
+            markers=True,
+            title=col_name,
+            color="system_name",
+        )
+        fig.show()
 
 
 def plot_wind_rose(df, id: int, location: str):
