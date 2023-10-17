@@ -14,7 +14,7 @@ poetry install
 
 ```bash
 📁 notebooks
-    📁 processing_pipeline.ipynb
+    📄 processing_pipeline.ipynb
 ```
 
 - Process your local db copy from tum-esm/hermes
@@ -23,7 +23,7 @@ poetry install
 
 ```bash
 📁 notebooks
-    📁 plot_all_data.ipynb
+    📄 plot_all_data.ipynb
 ```
 
 - Visualise all available sensor data
@@ -32,7 +32,7 @@ poetry install
 
 ```bash 
 📁 notebooks
-    📁 icos_calibration.ipynb
+    📄 icos_calibration.ipynb
 ```
 
 - Analyze the lab calibration
