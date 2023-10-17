@@ -8,38 +8,68 @@ import math
 
 def plot_sensor_measurement(
     df,
+    sensor_id,
     col_name: str,
-    col_time: str = "creation_timestamp",
-    sensor_id: list = [],
-    filter=None,
+    filter="1h",
 ):
+    df = df.select("creation_timestamp", "system_name", col_name).sort(
+        "creation_timestamp"
+    )
+
+    l_df = []
+
     for id in sensor_id:
-        # df_f = df.clone()
-        df_f = (
+        df_t = (
             df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
-            .sort(col_time)
-            .filter(pl.col(col_name) > 0)
-            .filter(pl.col(col_name) < 1200)
-            .select(pl.col(col_time, col_name))
-        )
-
-        if filter != None:
-            df_f = df_f.groupby_dynamic(col_time, every=filter).agg(
-                pl.all().exclude(col_time).mean()
+            .groupby_dynamic("creation_timestamp", every=filter)
+            .agg(
+                [
+                    pl.all().exclude(["creation_timestamp"]).mean(),
+                ]
             )
+            .with_columns(pl.lit(f"tum-esm-midcost-raspi-{id}").alias("system_name"))
+        )
+        l_df.append(df_t)
 
-        sns.lineplot(data=df_f, x=col_time, y=col_name, label=id)
+    df_agg = pl.concat(l_df, how="vertical")
 
-    # set axes labels
-    plt.xlabel("Time")
-    plt.ylabel(col_name)
-    plt.xticks(rotation=45)
-    # plt.legend(title="Systems", bbox_to_anchor=(1, 1))
-    plt.title(label=col_name)
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d.%m %H:%M"))
+    fig = px.line(
+        df_agg,
+        x="creation_timestamp",
+        y=col_name,
+        markers=True,
+        title=col_name,
+        color="system_name",
+    )
+    fig.show()
 
-    # show the plot
-    plt.show()
+    # for id in sensor_id:
+    #     # df_f = df.clone()
+    #     df_f = (
+    #         df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
+    #         .sort(col_time)
+    #         .filter(pl.col(col_name) > 0)
+    #         .filter(pl.col(col_name) < 1200)
+    #         .select(pl.col(col_time, col_name))
+    #     )
+
+    #     if filter != None:
+    #         df_f = df_f.groupby_dynamic(col_time, every=filter).agg(
+    #             pl.all().exclude(col_time).mean()
+    #         )
+
+    #     sns.lineplot(data=df_f, x=col_time, y=col_name, label=id)
+
+    # # set axes labels
+    # plt.xlabel("Time")
+    # plt.ylabel(col_name)
+    # plt.xticks(rotation=45)
+    # # plt.legend(title="Systems", bbox_to_anchor=(1, 1))
+    # plt.title(label=col_name)
+    # plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d.%m %H:%M"))
+
+    # # show the plot
+    # plt.show()
 
 
 def plot_sensor_calibration(
