@@ -2,6 +2,6 @@ config.json
 .venv
 *.dat
 *.pyc
-.DS_Store
 data/old_db_renamed_measurements.parquet
 data/pivot_measurements.parquet
+data/.DS_Store
