@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import plotly.express as px
 import math
+import warnings
+
+warnings.simplefilter("ignore", category=FutureWarning)
 
 
 def plot_sensor_measurement(
