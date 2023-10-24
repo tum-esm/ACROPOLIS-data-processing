@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import plotly.express as px
 import warnings
+from typing import Optional
 
 warnings.simplefilter("ignore", category=FutureWarning)
 
@@ -38,7 +39,14 @@ def average_bottle(conc_list):
     return 0
 
 
-def plot_sensor_measurement(df, col_name: str):
+def plot_sensor_measurement(df, col_name: str, filter: Optional[str] = None):
+    if filter != None:
+        df = df.groupby_dynamic("creation_timestamp", every=filter).agg(
+            [
+                pl.all().exclude(["creation_timestamp"]).mean(),
+            ]
+        )
+
     fig = px.line(
         df,
         x="creation_timestamp",
