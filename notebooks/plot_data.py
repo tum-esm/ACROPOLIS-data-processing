@@ -16,6 +16,8 @@ def plot_sensor_measurement(
     sensor_id,
     col_name: str,
     filter="1h",
+    cut_below: float | None = None,
+    cut_above: float | None = None,
 ):
     df = df.select("creation_timestamp", "system_name", col_name).sort(
         "creation_timestamp"
@@ -24,16 +26,30 @@ def plot_sensor_measurement(
     l_df = []
 
     for id in sensor_id:
-        df_t = (
-            df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
-            .groupby_dynamic("creation_timestamp", every=filter)
-            .agg(
-                [
-                    pl.all().exclude(["creation_timestamp"]).mean(),
-                ]
-            )
-            .with_columns(pl.lit(f"tum-esm-midcost-raspi-{id}").alias("system_name"))
+        df_t = df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}").filter(
+            pl.col(col_name) > 0
         )
+        # additional filters < and >
+        if cut_below != None:
+            df_t = df_t.filter(pl.col(col_name) > cut_below)
+
+        if cut_above != None:
+            df_t = df_t.filter(pl.col(col_name) < cut_above)
+
+        # time averaging
+        if filter != None:
+            df_t = (
+                df_t.groupby_dynamic("creation_timestamp", every=filter)
+                .agg(
+                    [
+                        pl.all().exclude(["creation_timestamp"]).mean(),
+                    ]
+                )
+                .with_columns(
+                    pl.lit(f"tum-esm-midcost-raspi-{id}").alias("system_name")
+                )
+            )
+
         l_df.append(df_t)
 
     df_agg = pl.concat(l_df, how="vertical")
@@ -47,50 +63,6 @@ def plot_sensor_measurement(
         color="system_name",
     )
     fig.show()
-
-
-def plot_sensor_calibration(
-    df,
-    col_name: str,
-    sensor_id: list = [],
-    filter: str | None = None,
-    cut_below: float | None = None,
-    cut_above: float | None = None,
-):
-    for id in sensor_id:
-        # select sensor
-        df_f = df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
-
-        df_f = df_f.filter(pl.col(col_name) > 0)
-        # additional filters < and >
-        if cut_below != None:
-            df_f = df_f.filter(pl.col(col_name) > cut_below)
-
-        if cut_above != None:
-            df_f = df_f.filter(pl.col(col_name) < cut_above)
-
-        # reduce df to relevant columns
-        df_f = df_f.select("creation_timestamp", "system_name", col_name)
-
-        # apply filter if configured
-        if filter != None:
-            df_f = (
-                df_f.sort("creation_timestamp")
-                .groupby_dynamic("creation_timestamp", every=filter)
-                .agg(pl.all().exclude("creation_timestamp").mean())
-            )
-
-        df_f = df_f.sort("creation_timestamp")
-
-        fig = px.line(
-            df_f,
-            x="creation_timestamp",
-            y=col_name,
-            markers=True,
-            title=col_name,
-            color="system_name",
-        )
-        fig.show()
 
 
 def plot_wind_rose(df, id: int, location: str):
