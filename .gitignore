@@ -2,8 +2,7 @@ config.json
 .venv
 *.dat
 *.pyc
-data/old_db_renamed_measurements.parquet
-data/pivot_measurements.parquet
-data/picarro.parquet
+*.parquet
 *.DS_Store
 data/.DS_Store
+.env
