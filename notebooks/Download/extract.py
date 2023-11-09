@@ -63,12 +63,10 @@ class _ExtractMeasurements(structure.Component):
             )
         except FileNotFoundError:
             pass
-        # get timestamp from measurements if no chunk is available
+        # get timestamp from acropolis.parquet if no chunk is available
         try:
             return (
-                _load(
-                    "measurements", directory=os.path.join(DATA_DIRECTORY, "download")
-                )
+                _load("acropolis", directory=os.path.join(DATA_DIRECTORY, "download"))
                 .sort("receipt_timestamp")
                 .select("receipt_timestamp")
                 .last()
@@ -162,11 +160,11 @@ class _Merge(structure.Component):
         self.directory = os.path.join(DATA_DIRECTORY, "download")
 
     def execute(self):
-        measurements = _load("measurements", directory=self.directory)
+        acropolis = _load("acropolis", directory=self.directory)
         sensors = _load("sensors", directory=os.path.join(self.directory, "metadata"))
 
-        # append all downloaded chunks to existing local measurements copy
-        pivots = [measurements]
+        # append all downloaded chunks to existing local acropolis copy
+        pivots = [acropolis]
         paths = glob.glob(
             os.path.join(DATA_DIRECTORY, "download", "chunks", "*.parquet")
         )
@@ -189,7 +187,7 @@ class _Merge(structure.Component):
         # perform a diagonal concat for all parquets in pivots
         print("Performing merge.")
         pl.concat(pivots, how="diagonal").collect().write_parquet(
-            os.path.join(DATA_DIRECTORY, "download", "measurements.parquet"),
+            os.path.join(DATA_DIRECTORY, "download", "acropolis.parquet"),
             statistics=True,
         )
 
@@ -199,7 +197,7 @@ class _Merge(structure.Component):
             os.remove(path)
 
         # Return structured raw data as LazyFrame for downstream components
-        return _load("measurements", directory=self.directory)
+        return _load("acropolis", directory=self.directory)
 
 
 class _RemoveDirectory(structure.Component):
