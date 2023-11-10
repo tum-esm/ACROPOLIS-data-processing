@@ -7,7 +7,7 @@ import connectorx
 import polars as pl
 import pyarrow.parquet
 
-import structure
+from . import structure
 
 TIMESCALE_CONNECTION_STRING = os.environ.get("TIMESCALE_CONNECTION_STRING")
 DATA_DIRECTORY = os.environ.get("DATA_DIRECTORY")

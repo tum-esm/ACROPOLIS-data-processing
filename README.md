@@ -27,7 +27,7 @@ poetry install
 ```
 
 - Download a local copy from hermes db
-- Dynamically calculate slope and intrcept from daily calibrations
+- Dynamically calculate slope and intercept from daily calibrations
 - Read and calibration correct Picarro measurement files
 
 ```bash
