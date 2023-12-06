@@ -12,14 +12,6 @@ poetry install
 
 ## Notebooks
 
-```bash
-📁 notebooks
-    📁 notebooks
-        📄 download_from_hermes.ipynb
-```
-
-- Download latest data from hermes db and perform pivot
-- Add new data to local database
 
 ```bash
 📁 notebooks
@@ -27,14 +19,24 @@ poetry install
 ```
 
 - Download a local copy from hermes db
+- Read and correct (calibration) PICARRO data
 - Dynamically calculate slope and intercept from daily calibrations
-- Read and calibration correct Picarro measurement files
+- Perform a Wet -> Dry conversion 
+- Aggregate to 10m and 1h products
 
 ```bash
 📁 notebooks
-    📄 plot_all_data.ipynb
+    📄 plot_raw_data.ipynb
 ```
 
 - Visualise all available sensor data
-- Perform calibration correction on sensor data
-- Compare site-by-site data to Picarro reference measurement
+
+
+```bash
+📁 notebooks
+    📄 plot_corrected_data.ipynb
+```
+
+- Perform calibration correction
+- Compare sensor data to reference instrument
+- Calculate RMSE, R2
