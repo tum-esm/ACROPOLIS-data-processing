@@ -25,6 +25,10 @@ def two_point_calibration(measured_values, true_values):
 
 
 def average_bottle(conc_list):
+    if len(conc_list) == 0:
+        print("Length of list to average is 0.")
+        return 0
+
     uncut_avg = sum(conc_list) / len(conc_list)
     print(f"Uncut average: {uncut_avg}")
 
