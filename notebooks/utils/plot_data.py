@@ -1,11 +1,6 @@
 import polars as pl
-import seaborn as sns
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 import plotly.express as px
 import math
-import numpy as np
-from sklearn.metrics import r2_score
 import warnings
 
 warnings.simplefilter("ignore", category=FutureWarning)
@@ -154,14 +149,3 @@ def find_closest_cardinal_direction(degree: float):
             closest_direction = direction
 
     return directions[closest_direction]
-
-
-def rmse(y_true, y_meas):
-    MSE = np.square(np.subtract(y_true, y_meas)).mean()
-    RMSE = math.sqrt(MSE)
-
-    return RMSE
-
-
-def calc_r2(y_true, y_meas):
-    return r2_score(y_true, y_meas)
