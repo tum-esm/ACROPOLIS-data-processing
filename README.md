@@ -1,6 +1,7 @@
 # acropolis-visualisation & processing pipeline
 
 A collection of Jupyter notebooks to pull, process and visualise ACROPOLIS network data.
+The repository is work in progress and can experience breaking changes.
 
 ## Installation
 
