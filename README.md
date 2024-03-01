@@ -31,13 +31,3 @@ poetry install
 ```
 
 - Visualise all available sensor data
-
-
-```bash
-📁 notebooks
-    📄 plot_corrected_data.ipynb
-```
-
-- Perform calibration correction
-- Compare sensor data to reference instrument
-- Calculate RMSE, R2
