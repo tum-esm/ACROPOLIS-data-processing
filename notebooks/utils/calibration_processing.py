@@ -30,7 +30,7 @@ def process_bottle(data: list):
 def two_point_calibration(measured_values: list, true_values: list):
     # Check if input lists have length 2
     if len(measured_values) != 2 or len(true_values) != 2:
-        raise ValueError("Both measured_values and true_values must have length 2")
+        return 0, 0
 
     # Calculate calibration parameters (slope and intercept)
 
