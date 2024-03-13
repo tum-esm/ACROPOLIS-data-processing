@@ -14,7 +14,10 @@ df_gas = pl.read_csv(os.path.join(DATA_DIRECTORY, "input", "averaged_gases.csv")
 # define functions
 
 
-def process_bottle(data: list):
+def process_bottle(data: list, ignore_len: bool = False):
+    if ignore_len:
+        x = data[int(len(data) * 0.3) : int(len(data) * 0.95)]
+        return numpy.median(x)
     # 2nd bottle
     if 50 < len(data) < 70:
         x = data[int(len(data) * 0.3) : int(len(data) * 0.95)]
