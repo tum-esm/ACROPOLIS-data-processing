@@ -14,7 +14,7 @@ source .venv/bin/activate
 poetry install
 ```
 
-Generate and fill a .env based on the .env.example
+Generate and fill an *.env* file based on the *.env.example*
 ```bash
 📁 root
     📄 .env.example
