@@ -31,7 +31,7 @@ poetry install
     📄 plot_raw_data.ipynb 
 ```
 
-- Visualise all available sensor data
+- Visualise raw and processed sensor data
 
 ```bash
 📁 notebooks
