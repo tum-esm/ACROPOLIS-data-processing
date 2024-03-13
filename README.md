@@ -3,6 +3,7 @@
 The ACROPOLIS (**A**utonomous and **C**alibrated **R**oof-top **O**bservatory for Metro**POLI**ton **S**ensing) network spans 20 roof-top CO2 sensor systems located in and around Munich and is part of the EU Horizon Project [ICOS Cities](https://www.icos-cp.eu/projects/icos-cities). The network is run by the open source software [Hermes](https://github.com/tum-esm/hermes). 
 
 This repository is a collection of Jupyter notebooks to download, process and visualise ACROPOLIS network data.
+
 The repository is work in progress and can experience breaking changes.
 
 ## Installation
@@ -40,5 +41,5 @@ poetry install
         📄 performance_scatter_plot.ipynb
 ```
 
-- Calculate the MAE, RMSE during the side-by-side campaign
-- Analyze dependencies on environmental parameters
+- Calculate the MAE, RMSE of the side-by-side campaign
+- Analyze performance dependencies on environmental parameters
