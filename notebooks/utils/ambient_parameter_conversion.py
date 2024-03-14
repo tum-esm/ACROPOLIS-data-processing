@@ -6,7 +6,7 @@ between molar and mass concentrations and similar operations.
 It also includes some useful constants
 
 -> Taken from Simone Bafellis <sensorutils>
-further edits done by Patrick Aigner
+refactored by Patrick Aigner
 """
 
 from typing import Final
