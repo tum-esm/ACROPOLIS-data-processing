@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-ongoing_side_by_side = datetime(2024, 3, 11, 23, 59, 59).replace(tzinfo=timezone.utc)
+ongoing_side_by_side = datetime(2024, 3, 19, 23, 59, 59).replace(tzinfo=timezone.utc)
 
 sbs_times = [
     (
