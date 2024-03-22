@@ -85,7 +85,11 @@ sbs_times = [
         datetime(2023, 12, 23, 0, 0, 0).replace(tzinfo=timezone.utc),
         datetime(2024, 2, 5, 23, 59, 59).replace(tzinfo=timezone.utc),
     ),
-    # 19 needs assembly
+    (
+        19,
+        datetime(2024, 3, 23, 0, 0, 0).replace(tzinfo=timezone.utc),
+        ongoing_side_by_side,
+    ),
     (
         20,
         datetime(2023, 12, 23, 0, 0, 0).replace(tzinfo=timezone.utc),
