@@ -69,13 +69,13 @@ def plot_wind_rose(df, id: int, location: str):
     # create bins for wind direction
     df_w = df_w.with_columns(
         pl.col("wxt532_direction_avg")
-        .apply(find_closest_cardinal_direction, return_dtype=float)
+        .map_elements(find_closest_cardinal_direction, return_dtype=float)
         .alias("cardinal_direction")
     )
     # create bins for wind speed
     df_w = df_w.with_columns(
         pl.col("wxt532_speed_avg")
-        .apply(lambda t: math.ceil(t * 2) / 2, return_dtype=float)
+        .map_elements(lambda t: math.ceil(t * 2) / 2, return_dtype=float)
         .alias("strength")
     )
     # groupby relevant bins
@@ -86,6 +86,77 @@ def plot_wind_rose(df, id: int, location: str):
         r="count",
         theta="cardinal_direction",
         color="strength",
+        template="seaborn",
+    )
+
+    fig.add_annotation(text="Calm", x=0.5, y=0.5, showarrow=False, font=dict(size=7))
+
+    fig.update_layout(
+        legend=dict(
+            orientation="h",
+            yanchor="middle",
+            y=-0.1,
+            xanchor="center",
+            x=0.5,
+            font=dict(size=14),
+        ),
+        polar=dict(
+            hole=0.1, radialaxis=dict(showticklabels=False, ticks="", linewidth=0)
+        ),
+        margin=dict(t=110),
+        title=dict(
+            text=f"{location}: Wind Distribution", xanchor="center", yanchor="top"
+        ),
+    )
+    fig.show()
+
+
+def plot_co2_rose(df, df_raw, id: int, location: str):
+
+    df_temp = (
+        df_raw.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
+        .select("creation_timestamp", "wxt532_direction_avg")
+        .with_columns(pl.col("wxt532_direction_avg").forward_fill().backward_fill())
+        .sort("creation_timestamp")
+    )
+
+    df_w = (
+        df.sort("creation_timestamp")
+        .filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
+        .drop("wxt532_direction_avg")
+        .join_asof(
+            df_temp, on="creation_timestamp", strategy="nearest", tolerance="10m"
+        )
+    )
+
+    # filter for system
+    df_w = df_w.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}").filter(
+        pl.col("wxt532_direction_avg") > 0
+    )
+    # create bins for wind direction
+    df_w = df_w.with_columns(
+        pl.col("wxt532_direction_avg")
+        .map_elements(find_closest_cardinal_direction, return_dtype=float)
+        .alias("cardinal_direction")
+    )
+    # create bins for wind speed
+    df_w = df_w.with_columns(
+        pl.col("gmp343_corrected")
+        .map_elements(lambda t: math.ceil(t * 2) / 2, return_dtype=float)
+        .alias("concentration")
+    )
+    # groupby relevant bins
+    df_w = (
+        df_w.groupby(["cardinal_direction", "concentration"])
+        .count()
+        .sort("concentration")
+    )
+
+    fig = px.bar_polar(
+        df_w,
+        r="count",
+        theta="cardinal_direction",
+        color="concentration",
         template="seaborn",
     )
 
