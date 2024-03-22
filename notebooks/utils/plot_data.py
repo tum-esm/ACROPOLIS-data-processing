@@ -143,20 +143,20 @@ def plot_co2_rose(df, df_raw, id: int, location: str):
     df_w = df_w.with_columns(
         pl.col("gmp343_corrected")
         .map_elements(lambda t: math.ceil(t * 2) / 2, return_dtype=float)
-        .alias("concentration")
+        .alias("CO2 concentration (ppm)")
     )
     # groupby relevant bins
     df_w = (
-        df_w.groupby(["cardinal_direction", "concentration"])
+        df_w.groupby(["cardinal_direction", "CO2 concentration (ppm)"])
         .count()
-        .sort("concentration")
+        .sort("CO2 concentration (ppm)")
     )
 
     fig = px.bar_polar(
         df_w,
         r="count",
         theta="cardinal_direction",
-        color="concentration",
+        color="CO2 concentration (ppm)",
         template="seaborn",
     )
 
