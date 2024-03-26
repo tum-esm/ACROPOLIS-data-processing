@@ -8,7 +8,11 @@ sbs_times = [
         datetime(2024, 2, 7, 0, 0, 0).replace(tzinfo=timezone.utc),
         datetime(2024, 2, 26, 23, 59, 59).replace(tzinfo=timezone.utc),
     ),
-    # 2 is still deployed
+    (
+        2,
+        datetime(2024, 3, 13, 0, 0, 0).replace(tzinfo=timezone.utc),
+        ongoing_side_by_side,
+    ),
     (
         3,
         datetime(2024, 1, 13, 0, 0, 0).replace(tzinfo=timezone.utc),
@@ -79,7 +83,11 @@ sbs_times = [
         datetime(2023, 12, 23, 0, 0, 0).replace(tzinfo=timezone.utc),
         datetime(2024, 2, 5, 23, 59, 59).replace(tzinfo=timezone.utc),
     ),
-    # 17 needs assembly
+    (
+        17,
+        datetime(2024, 3, 27, 0, 0, 0).replace(tzinfo=timezone.utc),
+        ongoing_side_by_side,
+    ),
     (
         18,
         datetime(2023, 12, 23, 0, 0, 0).replace(tzinfo=timezone.utc),
