@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-ongoing_side_by_side = datetime(2024, 3, 27, 23, 59, 59).replace(tzinfo=timezone.utc)
+ongoing_side_by_side = datetime(2024, 4, 7, 23, 59, 59).replace(tzinfo=timezone.utc)
 
 sbs_times = [
     (
@@ -51,12 +51,12 @@ sbs_times = [
     (
         10,
         datetime(2024, 1, 13, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 4, 7, 23, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         11,
         datetime(2024, 1, 12, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 4, 7, 23, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         12,
@@ -85,7 +85,7 @@ sbs_times = [
     ),
     (
         17,
-        datetime(2024, 3, 27, 0, 0, 0).replace(tzinfo=timezone.utc),
+        datetime(2024, 3, 28, 0, 0, 0).replace(tzinfo=timezone.utc),
         ongoing_side_by_side,
     ),
     (

@@ -45,7 +45,7 @@ class _ExtractMeasurements(quickflow_blocks.Component):
     never updated in the database, only appended.
     """
 
-    def __init__(self, chunksize=(2**12 / 4)):
+    def __init__(self, chunksize=(2**12)):
         self.directory = os.path.join(DATA_DIRECTORY, "download", "chunks")
         self.chunksize = chunksize
 
