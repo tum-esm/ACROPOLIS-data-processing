@@ -216,7 +216,7 @@ class Extract(quickflow_blocks.Composite):
     Returns a polars LazyFrame.
     """
 
-    def __init__(self, chunksize=2**14, reset=False):
+    def __init__(self, chunksize=2**16, reset=False):
         self._components = [
             _ExtractMeasurements(chunksize=chunksize),
             _ExtractMetadata(),
