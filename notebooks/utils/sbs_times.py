@@ -1,7 +1,5 @@
 from datetime import datetime, timezone
 
-ongoing_side_by_side = datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc)
-
 sbs_times = [
     (
         1,
@@ -11,7 +9,7 @@ sbs_times = [
     (
         2,
         datetime(2024, 3, 13, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         3,
@@ -21,7 +19,7 @@ sbs_times = [
     (
         4,
         datetime(2024, 2, 14, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 3, 20, 0, 0, 0).replace(tzinfo=timezone.utc),
     ),
     (
         5,
@@ -31,12 +29,12 @@ sbs_times = [
     (
         6,
         datetime(2024, 2, 20, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         7,
         datetime(2024, 2, 21, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         8,
@@ -46,7 +44,7 @@ sbs_times = [
     (
         9,
         datetime(2024, 2, 12, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         10,
@@ -70,13 +68,13 @@ sbs_times = [
     ),
     (
         14,
-        datetime(2024, 3, 2, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 3, 3, 0, 0, 0).replace(tzinfo=timezone.utc),
+        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         15,
-        datetime(2024, 2, 21, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 2, 26, 0, 0, 0).replace(tzinfo=timezone.utc),
+        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         16,
@@ -86,7 +84,7 @@ sbs_times = [
     (
         17,
         datetime(2024, 3, 28, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         18,
@@ -96,7 +94,7 @@ sbs_times = [
     (
         19,
         datetime(2024, 3, 23, 0, 0, 0).replace(tzinfo=timezone.utc),
-        ongoing_side_by_side,
+        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         20,
