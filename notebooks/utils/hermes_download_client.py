@@ -50,25 +50,27 @@ class _ExtractMeasurements(quickflow_blocks.Component):
         self.chunksize = chunksize
 
     def _read_tail(self):
-        """Get receipt_timestamp and index of latest measurement."""
+        """Get creation_timestamp and index of latest measurement."""
         # get latest timestamp from last chunk
         try:
             return (
                 _load("measurements-chunk-*", directory=self.directory)
-                .sort("receipt_timestamp")
-                .select("receipt_timestamp")
+                .sort("creation_timestamp")
+                .select("creation_timestamp")
                 .last()
                 .collect()
                 .row(0)
             )
         except FileNotFoundError:
+            print("did not find a measurements-chunk-*.parquet")
             pass
         # get timestamp from acropolis.parquet if no chunk is available
         try:
+            print("reading last creation_timestamp from acropolis.parquet")
             return (
                 _load("acropolis", directory=os.path.join(DATA_DIRECTORY, "download"))
-                .sort("receipt_timestamp")
-                .select("receipt_timestamp")
+                .sort("creation_timestamp")
+                .select("creation_timestamp")
                 .last()
                 .collect()
                 .row(0)
@@ -88,22 +90,22 @@ class _ExtractMeasurements(quickflow_blocks.Component):
         flag = True
         print("Start downloading from datetime: ")
         while flag:
-            receipt_timestamp = self._read_tail()[0]
-            print(receipt_timestamp)
+            creation_timestamp = self._read_tail()[0]
+            print(creation_timestamp)
             # Define query and download
             query = (
                 f"""
                     SELECT *
                     FROM measurement
-                    ORDER BY receipt_timestamp
+                    ORDER BY creation_timestamp
                     LIMIT {self.chunksize}
                 """
-                if receipt_timestamp is None
+                if creation_timestamp is None
                 else f"""
                     SELECT *
                     FROM measurement
-                    WHERE receipt_timestamp > '{receipt_timestamp}'
-                    ORDER BY receipt_timestamp
+                    WHERE creation_timestamp > '{creation_timestamp}'
+                    ORDER BY creation_timestamp
                     LIMIT {self.chunksize}
                 """
             )
