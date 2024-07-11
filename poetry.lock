@@ -504,6 +504,20 @@ unicode = ["unicodedata2 (>=15.1.0)"]
 woff = ["brotli (>=1.0.1)", "brotlicffi (>=0.8.0)", "zopfli (>=0.1.4)"]
 
 [[package]]
+name = "hampel"
+version = "1.0.2"
+description = "Python implementation of the Hampel Filter"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "hampel-1.0.2.tar.gz", hash = "sha256:08d5646b40c9f68190820d04e3a0cca37267f46731048683f68c5b932761075d"},
+]
+
+[package.dependencies]
+numpy = ">=1.17.3"
+pandas = "*"
+
+[[package]]
 name = "idna"
 version = "3.6"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -2102,4 +2116,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "3f0f662e0b810b40f0943c09aa97710264f2e7913c243759b6b9a8a9be81190b"
+content-hash = "c3796a54210d5b860e07606f1b96b319ec703c266920feb2c756153c362b06e3"

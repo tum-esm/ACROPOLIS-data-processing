@@ -21,6 +21,7 @@ lmu-meteo-api = "^0.2.0"
 polars = "^0.20.10"
 connectorx = "^0.3.2"
 psycopg2-binary = "^2.9.9"
+hampel = "^1.0.2"
 
 
 [tool.poetry.group.dev.dependencies]
