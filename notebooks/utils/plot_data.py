@@ -14,16 +14,14 @@ def plot_sensor_measurement(
     cut_below: float | None = None,
     cut_above: float | None = None,
 ):
-    df = df.select("creation_timestamp", "system_name", col_name).sort(
+    df = df.select("creation_timestamp", "system_id", col_name).sort(
         "creation_timestamp"
     )
 
     l_df = []
 
     for id in sensor_id:
-        df_t = df.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}").filter(
-            pl.col(col_name) > 0
-        )
+        df_t = df.filter(pl.col("system_id") == id).filter(pl.col(col_name) > 0)
         # additional filters < and >
         if cut_below != None:
             df_t = df_t.filter(pl.col(col_name) > cut_below)
@@ -40,9 +38,7 @@ def plot_sensor_measurement(
                         pl.all().exclude(["creation_timestamp"]).mean(),
                     ]
                 )
-                .with_columns(
-                    pl.lit(f"tum-esm-midcost-raspi-{id}").alias("system_name")
-                )
+                .with_columns(pl.lit(id).alias("system_id"))
             )
 
         l_df.append(df_t)
@@ -55,7 +51,7 @@ def plot_sensor_measurement(
         y=col_name,
         markers=True,
         title=col_name,
-        color="system_name",
+        color="system_id",
     )
     fig.show()
 
@@ -63,7 +59,7 @@ def plot_sensor_measurement(
 def plot_wind_rose(df, id: int, location: str):
     df_w = df.clone()
     # filter for system
-    df_w = df_w.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}").filter(
+    df_w = df_w.filter(pl.col("system_id") == id).filter(
         pl.col("wxt532_direction_avg") > 0
     )
     # create bins for wind direction
@@ -111,26 +107,10 @@ def plot_wind_rose(df, id: int, location: str):
     fig.show()
 
 
-def plot_co2_rose(df, df_raw, id: int, location: str):
-
-    df_temp = (
-        df_raw.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
-        .select("creation_timestamp", "wxt532_direction_avg")
-        .with_columns(pl.col("wxt532_direction_avg").forward_fill().backward_fill())
-        .sort("creation_timestamp")
-    )
-
-    df_w = (
-        df.sort("creation_timestamp")
-        .filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}")
-        .drop("wxt532_direction_avg")
-        .join_asof(
-            df_temp, on="creation_timestamp", strategy="nearest", tolerance="10m"
-        )
-    )
-
+def plot_co2_rose(df, id: int, location: str):
+    df_w = df.clone()
     # filter for system
-    df_w = df_w.filter(pl.col("system_name") == f"tum-esm-midcost-raspi-{id}").filter(
+    df_w = df_w.filter(pl.col("system_id") == id).filter(
         pl.col("wxt532_direction_avg") > 0
     )
     # create bins for wind direction
