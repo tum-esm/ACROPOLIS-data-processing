@@ -44,7 +44,7 @@ sbs_times = [
     (
         9,
         datetime(2024, 2, 12, 0, 0, 0).replace(tzinfo=timezone.utc),
-        datetime(2024, 4, 17, 9, 59, 59).replace(tzinfo=timezone.utc),
+        datetime(2024, 4, 5, 9, 59, 59).replace(tzinfo=timezone.utc),
     ),
     (
         10,
