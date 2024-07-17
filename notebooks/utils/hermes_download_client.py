@@ -53,28 +53,22 @@ class _ExtractMeasurements(quickflow_blocks.Component):
         """Get creation_timestamp and index of latest measurement."""
         # get latest timestamp from last chunk
         try:
-            return (
-                _load("measurements-chunk-*", directory=self.directory)
-                .sort("creation_timestamp")
-                .select("creation_timestamp")
-                .last()
-                .collect()
-                .row(0)
-            )
+            return (_load(
+                "measurements-chunk-*",
+                directory=self.directory).sort("creation_timestamp").select(
+                    "creation_timestamp").last().collect().row(0))
         except FileNotFoundError:
             print("did not find a measurements-chunk-*.parquet")
             pass
         # get timestamp from acropolis.parquet if no chunk is available
         try:
             print("reading last creation_timestamp from acropolis.parquet")
-            return (
-                _load("acropolis", directory=os.path.join(DATA_DIRECTORY, "download"))
-                .sort("creation_timestamp")
-                .select("creation_timestamp")
-                .last()
-                .collect()
-                .row(0)
-            )
+            return (_load(
+                "acropolis",
+                directory=os.path.join(
+                    DATA_DIRECTORY,
+                    "download")).sort("creation_timestamp").select(
+                        "creation_timestamp").last().collect().row(0))
         except FileNotFoundError:
             # download from start
             return [None]
@@ -82,8 +76,8 @@ class _ExtractMeasurements(quickflow_blocks.Component):
     def execute(self):
         # Delete (then recreate) fragment to avoid many small and incomplete chunks
         for path in glob.glob(
-            os.path.join(self.directory, "measurements-chunk-*-fragment.parquet")
-        ):
+                os.path.join(self.directory,
+                             "measurements-chunk-*-fragment.parquet")):
             os.remove(path)
 
         # Download chunks incrementally
@@ -93,22 +87,18 @@ class _ExtractMeasurements(quickflow_blocks.Component):
             creation_timestamp = self._read_tail()[0]
             print(creation_timestamp)
             # Define query and download
-            query = (
-                f"""
+            query = (f"""
                     SELECT *
                     FROM measurement
                     ORDER BY creation_timestamp
                     LIMIT {self.chunksize}
-                """
-                if creation_timestamp is None
-                else f"""
+                """ if creation_timestamp is None else f"""
                     SELECT *
                     FROM measurement
                     WHERE creation_timestamp > '{creation_timestamp}'
                     ORDER BY creation_timestamp
                     LIMIT {self.chunksize}
-                """
-            )
+                """)
             table = _extract(query)
             tags = ["measurements", "chunk", secrets.token_hex(4)]
             if len(table) < self.chunksize:
@@ -118,7 +108,8 @@ class _ExtractMeasurements(quickflow_blocks.Component):
                 tags.append("fragment")  # Mark incomplete chunks as fragments
             _write(table=table, tags=tags, directory=self.directory)
             # Pivot with polars and overwrite
-            path = os.path.join(self.directory, f"{'-'.join(map(str, tags))}.parquet")
+            path = os.path.join(self.directory,
+                                f"{'-'.join(map(str, tags))}.parquet")
 
             pl.read_parquet(path).pivot(
                 values="value",
@@ -163,32 +154,33 @@ class _Merge(quickflow_blocks.Component):
 
     def execute(self):
         acropolis = _load("acropolis", directory=self.directory)
-        sensors = _load("sensors", directory=os.path.join(self.directory, "metadata"))
+        sensors = _load("sensors",
+                        directory=os.path.join(self.directory, "metadata"))
 
         # append all downloaded chunks to existing local acropolis copy
-        pivots = [acropolis]
+        pivots = []
         paths = glob.glob(
-            os.path.join(DATA_DIRECTORY, "download", "chunks", "*.parquet")
-        )
+            os.path.join(DATA_DIRECTORY, "download", "chunks", "*.parquet"))
 
         # Merge chunks & sensor metadata
         for path in paths:
             pivots.append(
-                pl.scan_parquet(path)
-                .join(
+                pl.scan_parquet(path).join(
                     sensors.select("identifier", "name"),
                     how="left",
                     left_on="sensor_identifier",
                     right_on="identifier",
-                )
-                .drop("sensor_identifier")
-                .rename({"name": "system_name"})
-                .with_columns(pl.col("creation_timestamp").dt.cast_time_unit("us"))
-            )
+                ).drop("sensor_identifier").rename({
+                    "name": "system_name"
+                }).with_columns(
+                    pl.col("creation_timestamp").dt.cast_time_unit("us")))
 
         # perform a diagonal concat for all parquets in pivots
         print("Performing merge.")
-        pl.concat(pivots, how="diagonal").collect().write_parquet(
+        pivots = [acropolis] + pivots
+        result = pl.concat(pivots, how="diagonal").collect()
+
+        result.write_parquet(
             os.path.join(DATA_DIRECTORY, "download", "acropolis.parquet"),
             statistics=True,
         )
@@ -198,8 +190,9 @@ class _Merge(quickflow_blocks.Component):
         for path in paths:
             os.remove(path)
 
+        return result
         # Return structured raw data as LazyFrame for downstream components
-        return _load("acropolis", directory=self.directory)
+        #return _load("acropolis", directory=self.directory)
 
 
 class _RemoveDirectory(quickflow_blocks.Component):
