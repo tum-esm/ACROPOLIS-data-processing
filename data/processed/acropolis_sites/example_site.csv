@@ -3,7 +3,7 @@
 # DATA FORMAT: see the last line of this header for column description
 # TOTAL LINES: 222
 # HEADER LINES: 39
-# PROJECT: PAUL/ICOS CITIES
+# PROJECT: ICOS CITIES
 # DATA VERSION: L2
 # STATION CODE: SMAI
 # STATION NAME: Mittelschule Maisach (SMAI)
@@ -24,12 +24,12 @@
 # MEASUREMENT METHOD: NDIR
 # INSTRUMENT: Vaisala GMP343
 # SAMPLING TYPE: continuous
-# TIME ZONE: UTC +0
+# TIME ZONE: Central European Time (UTC+1), Central European Summer Time (UTC+2)
 # MEASUREMENT SCALE: WMO-CO2-X2019
 # DATA POLICY: ICOS CITIES DATA is licensed under a Creative Commons Attribution 4.0 international licence (http://creativecommons.org/licenses/by/4.0/.The ICOS CITIES data licence is described at https://data.icos-cities.eu/licence.
 # COMMENT:
 #
-#   - Times are UTC
+#   - Times are UTC+0
 #   - Time-averaged values are reported at the middle of the averaging interval.
 #   - Flag 'O' = data correct after manual quality control
 #   - Flag 'K' = data incorrect after manual quality control
