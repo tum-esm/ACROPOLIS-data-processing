@@ -1,0 +1,40 @@
+# TITLE: co2 - continuous time series from low and mid cost sensors
+# FILE NAME: example_site.csv
+# DATA FORMAT: see the last line of this header for column description
+# TOTAL LINES: 183
+# HEADER LINES: 39
+# PROJECT: PAUL/ICOS CITIES
+# DATA VERSION: L1
+# STATION CODE: SMAI
+# STATION NAME: Mittelschule Maisach (SMAI)
+# OBSERVATION CATEGORY: Air sampling observation at a stationary platform
+# COUNTRY/TERRITORY: DE
+# RESPONSIBLE INSTITUTE: TUM, Technial University Munich
+# CONTRIBUTOR:  Patrick Aigner, Klaus Kürzinger, Jia Chen
+# CONTACT POINT: Patrick Aigner <patrick.aigner@tum.de>, Jia Chen <jia.chen@tum.de>
+# FUNDING: European Union's Horizon 2020 Research and Innovation Programme, Grant Agreement No. 101037319
+# LATITUDE: 12.345678
+# LONGITUDE: 12.345679
+# ALTITUDE: 523.1 m asl
+# SAMPLING HEIGHTS: 24.2 m agl
+# PARAMETER: co2
+# COVERING PERIOD: 2024-07-09 09:30:00 - 2024-07-16 23:30:00
+# TIME INTERVAL: hourly
+# MEASUREMENT UNIT: µmol/mol
+# MEASUREMENT METHOD: NDIR
+# INSTRUMENT: Vaisala GMP343
+# SAMPLING TYPE: continuous
+# TIME ZONE: UTC +0
+# MEASUREMENT SCALE: WMO-CO2-X2019
+# DATA POLICY: ICOS CITIES DATA is licensed under a Creative Commons Attribution 4.0 international licence (http://creativecommons.org/licenses/by/4.0/.The ICOS CITIES data licence is described at https://data.icos-cities.eu/licence.
+# COMMENT:
+#
+#   - Times are UTC
+#   - Time-averaged values are reported at the middle of the averaging interval.
+#   - Flag 'O' = data correct after manual quality control
+#   - Flag 'K' = data incorrect after manual quality control
+#   - In case of gaps between instruments, the timeseries are filled with empty string
+#   - Release notes: 
+#
+#Datetime;Year;Month;Day;Hour;Minute;Second;DecimalDate;co2;NbPoints;Stdev;Flag;OriginalFlag
+""
