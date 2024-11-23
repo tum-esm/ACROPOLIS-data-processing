@@ -63,12 +63,19 @@ class _ExtractMeasurements(quickflow_blocks.Component):
         # get timestamp from acropolis.parquet if no chunk is available
         try:
             print("reading last creation_timestamp from acropolis.parquet")
-            return (_load(
-                "acropolis",
-                directory=os.path.join(
-                    DATA_DIRECTORY,
-                    "download")).sort("creation_timestamp").select(
-                        "creation_timestamp").last().collect().row(0))
+
+            # look for latest file in download folder and select it
+            latest_acropolis_file = sorted(glob.glob(
+                os.path.join(DATA_DIRECTORY, "download", "measurements", "*",
+                             "*.parquet")),
+                                           key=os.path.getmtime)[-1]
+
+            last_timestamp = pl.scan_parquet(latest_acropolis_file).sort(
+                "creation_timestamp").select(
+                    "creation_timestamp").last().collect().row(0)
+
+            return last_timestamp
+
         except FileNotFoundError:
             # download from start
             return [None]
@@ -153,7 +160,13 @@ class _Merge(quickflow_blocks.Component):
         self.directory = os.path.join(DATA_DIRECTORY, "download")
 
     def execute(self):
-        acropolis = _load("acropolis", directory=self.directory)
+        # look for latest file in download folder and select it
+        latest_acropolis_file = sorted(glob.glob(
+            os.path.join(DATA_DIRECTORY, "download", "measurements", "*",
+                         "*.parquet")),
+                                       key=os.path.getmtime)[-1]
+
+        acropolis = pl.scan_parquet(latest_acropolis_file)
         sensors = _load("sensors",
                         directory=os.path.join(self.directory, "metadata"))
 
@@ -163,6 +176,7 @@ class _Merge(quickflow_blocks.Component):
             os.path.join(DATA_DIRECTORY, "download", "chunks", "*.parquet"))
 
         # Merge chunks & sensor metadata
+        print("Joining metadata.")
         for path in paths:
             pivots.append(
                 pl.scan_parquet(path).join(
@@ -184,6 +198,21 @@ class _Merge(quickflow_blocks.Component):
             os.path.join(DATA_DIRECTORY, "download", "acropolis.parquet"),
             statistics=True,
         )
+        print("Dumping merged files.")
+
+        months = result.select(pl.col(
+            "creation_timestamp").dt.month()).to_series().unique().to_list()
+
+        years = result.select(pl.col(
+            "creation_timestamp").dt.year()).to_series().unique().to_list()
+
+        for year in years:
+            for month in months:
+                result.filter(pl.col("creation_timestamp").dt.month() == month) \
+                .filter(pl.col("creation_timestamp").dt.year() == year) \
+                .with_columns(pl.col("system_name").str.extract(r'(\d+)',1).str.to_integer().alias("system_id")) \
+                .sort("creation_timestamp") \
+                .write_parquet(os.path.join(DATA_DIRECTORY, "download","measurements", str(year), f"{year}_{month}_acropolis.parquet"))
 
         # Delete chunks that were merged
         print("Deleting merged chunks.")
