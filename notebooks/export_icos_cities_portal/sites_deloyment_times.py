@@ -1,5 +1,4 @@
 from datetime import datetime, timezone
-from dataclasses import dataclass
 
 # INFO: First two days of deployment are cut due to system warming up and adjusting to new environment
 
@@ -10,18 +9,13 @@ deployment_times = {
     "TUMR": {
         "sensors": [
             {
-                "id": 6,
-                "start_time": "2024-02-21T00:00:00+0000",
-                "end_time": "2024-05-11T00:00:00+0000"
+                "id": 4,
+                "start_time": "2024-02-14T00:00:00+0000",
+                "end_time": "2024-7-1T00:00:00+0000"
             },
             {
-                "id": 19,
-                "start_time": "2024-05-11T00:00:00+0000",
-                "end_time": "2024-07-19T00:00:00+0000"
-            },
-            {
-                "id": 6,
-                "start_time": "2024-09-04T00:00:00+0000",
+                "id": 2,
+                "start_time": "2024-7-1T00:00:00+0000",
                 "end_time": current_date
             },
         ],
