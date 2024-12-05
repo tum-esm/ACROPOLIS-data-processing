@@ -14,7 +14,7 @@ deployment_times = {
                 "end_time": "2024-7-1T00:00:00+0000"
             },
             {
-                "id": 2,
+                "id": 6,
                 "start_time": "2024-7-1T00:00:00+0000",
                 "end_time": current_date
             },
