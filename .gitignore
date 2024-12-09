@@ -6,6 +6,7 @@ config.json
 *.DS_Store
 data/.DS_Store
 .env
+*.zip
 data/processed/icos_cities_portal_processing/level_1/*.csv
 data/processed/icos_cities_portal_processing/level_2/*.csv
 
