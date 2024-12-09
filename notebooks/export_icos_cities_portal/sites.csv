@@ -1,6 +1,6 @@
 ﻿site;site_name;latitude;longitude;elevation;site_type;installation_classification;height_of_building;responsible_party
 TUMR;TUM Zentralgelände Nord Maxvorstadt;48.150733;11.569168;511.39;city;rooftop;31.06;tum:environmental_sensing and_modeling
-FELR;Rathaus Gemeinde Feldkirchen;48.147752;11.730560;524.00;background;rooftop;15.73;tum:environmental_sensing and_modeling
+FELR;Rathaus Gemeinde Feldkirchen;48.147752;11.730560;524.00;city;rooftop;15.73;tum:environmental_sensing and_modeling
 TAUR;Walter-Klingenbeck-Realschule Taufkirchen;48.046658;11.608449;562.55;background;rooftop;17.89;tum:environmental_sensing and_modeling
 DLRR;DLR Oberpfaffenhofen;48.086712;11.278840;576.17;background;rooftop;22.92;tum:environmental_sensing and_modeling
 SENR;Klenze-Gymnasium Sendling;48.115438;11.544260;526.33;city;rooftop;15.33;tum:environmental_sensing and_modeling
@@ -16,6 +16,7 @@ NPLR;München Klinik Neuperlach;48.094790;11.656115;539.87;city;rooftop;31.43;tu
 BOGR;München Klinik Bogenhausen;48.155391;11.625420;511.96;city;rooftop;39.46;tum:environmental_sensing and_modeling
 HARR;München Klinik Harlaching;48.086350;11.556439;553.1;city;rooftop;29.30;tum:environmental_sensing and_modeling
 BALR;Michaeli-Gymnasium Berg-am-Laim;48.120765;11.639474;528.0;city;rooftop;18.17;tum:environmental_sensing and_modeling
+UNTR;München Unterföhring Allianz Hauptzentrale;48.187631; 11.650006;499.65;city;rooftop;32.93;tum:environmental_sensing and_modeling
 LOTC;Co-Location LfU Lothstraße;48.154566;11.554620;519.0;lfu_colocation;streetlevel;;tum:environmental_sensing and_modeling
 HANV;Hanauer Straße;48.172732;11.528536;510.0;individual;streetlevel;;tum:environmental_sensing and_modeling
 DOMV;Dom-Pedro-Straße;48.159655;11.537629;520.0;individual;streetlevel;;tum:environmental_sensing and_modeling
