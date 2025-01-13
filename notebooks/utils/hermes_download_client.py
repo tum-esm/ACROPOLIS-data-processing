@@ -200,13 +200,13 @@ class _Merge(quickflow_blocks.Component):
         )
         print("Dumping merged files.")
 
-        months = result.select(pl.col(
-            "creation_timestamp").dt.month()).to_series().unique().to_list()
-
         years = result.select(pl.col(
             "creation_timestamp").dt.year()).to_series().unique().to_list()
 
         for year in years:
+            months = result.filter(pl.col("creation_timestamp").dt.year() == year) \
+                .select(pl.col("creation_timestamp").dt.month()) \
+                .to_series().unique().to_list()
             for month in months:
                 result.filter(pl.col("creation_timestamp").dt.month() == month) \
                 .filter(pl.col("creation_timestamp").dt.year() == year) \
