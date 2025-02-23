@@ -1,5 +1,4 @@
 import polars as pl
-import os
 
 from utils.config_files import load_json_config
 from utils.import_system_data import import_acropolis_system_data
@@ -12,52 +11,51 @@ from utils.paths import PIPELINE_OUTPUT_DIRECTORY
 
 config = load_json_config("config.json")
 
-id = 6
+for id in config["postprocessing"]["system_ids"]:
+    # Import system data
+    df_raw = import_acropolis_system_data(
+        years=config["postprocessing"]["input_years"], id=id)
 
-# Import system data
-df_raw = import_acropolis_system_data(
-    years=config["postprocessing"]["input_years"], id=id)
+    # Extract data
+    df_wind = extract_wind_data(df_raw)
+    df_aux = extraxt_auxilliary_data(df_raw)
+    df_edge_cal = extract_edge_calibration_data(df_raw)
+    df_measurement = extract_measurement_data(df_raw)
+    df_calibration = extract_calibration_data(df_raw)
 
-# Extract data
-df_wind = extract_wind_data(df_raw)
-df_aux = extraxt_auxilliary_data(df_raw)
-df_edge_cal = extract_edge_calibration_data(df_raw)
-df_measurement = extract_measurement_data(df_raw)
-df_calibration = extract_calibration_data(df_raw)
+    # Calculate slope and intercept
+    df_slope_intercept = calculate_slope_intercept(df_calibration)
 
-# Calculate slope and intercept
-df_slope_intercept = calculate_slope_intercept(df_calibration)
+    # Aggregate to 1 minute intervals
+    df = df_measurement.group_by_dynamic("datetime", every='1m', group_by=["system_id", "system_name"]) \
+            .agg(pl.all().exclude(["datetime","system_id", "system_name"]).mean())
 
-# Aggregate to 1 minute intervals
-df = df_measurement.group_by_dynamic("datetime", every='1m', group_by=["system_id", "system_name"]) \
-        .agg(pl.all().exclude(["datetime","system_id", "system_name"]).mean())
+    # Process measurement data
+    df = df.pipe(wet_to_dry_mole_fraction) \
+        .pipe(apply_slope_intercept, df_slope_intercept) \
+        .join_asof(df_wind, on="datetime", strategy="nearest", tolerance="2m") \
+        .join_asof(df_aux, on="datetime", strategy="nearest", tolerance="2m") \
+        .join_asof(df_edge_cal, on="datetime", strategy="nearest", tolerance="1d") \
+        .drop("^.*_right$")
 
-# Process measurement data
-df = df.pipe(wet_to_dry_mole_fraction) \
-    .pipe(apply_slope_intercept, df_slope_intercept) \
-    .join_asof(df_wind, on="datetime", strategy="nearest", tolerance="2m") \
-    .join_asof(df_aux, on="datetime", strategy="nearest", tolerance="2m") \
-    .join_asof(df_edge_cal, on="datetime", strategy="nearest", tolerance="1d") \
-    .drop("^.*_right$")
+    # Save data
+    write_split_years(df=df,
+                      id=id,
+                      target_directory=PIPELINE_OUTPUT_DIRECTORY,
+                      prefix="1min")
 
-# Save data
-write_split_years(df=df,
-                  id=id,
-                  target_directory=PIPELINE_OUTPUT_DIRECTORY,
-                  prefix="1min")
+    # Aggregate to 1 hour intervals
+    df_1h = df.sort("datetime") \
+            .group_by_dynamic("datetime", every='1h', group_by=["system_id", "system_name"]) \
+            .agg(pl.all().exclude(["datetime","system_name"]).mean(),
+                    pl.col("gmp343_corrected").std().alias("gmp343_corrected_std"),
+                    pl.col("gmp343_corrected").var().alias("gmp343_corrected_var"))
 
-# Aggregate to 1 hour intervals
-df_1h = df.sort("datetime") \
-        .group_by_dynamic("datetime", every='1h', group_by=["system_id", "system_name"]) \
-        .agg(pl.all().exclude(["datetime","system_name"]).mean(),
-                pl.col("gmp343_corrected").std().alias("gmp343_corrected_std"),
-                pl.col("gmp343_corrected").var().alias("gmp343_corrected_var"))
-
-# Save data
-write_split_years(df=df,
-                  id=id,
-                  target_directory=PIPELINE_OUTPUT_DIRECTORY,
-                  prefix="1h")
+    # Save data
+    write_split_years(df=df_1h,
+                      id=id,
+                      target_directory=PIPELINE_OUTPUT_DIRECTORY,
+                      prefix="1h")
 
 # import plotly.express as px
 # fig = px.line(
