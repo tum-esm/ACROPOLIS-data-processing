@@ -1,15 +1,18 @@
-config.json
-.venv
 __pycache__
+.venv
+*.DS_Store
+
+# data files
+*.zip
 *.dat
 *.pyc
 *.parquet
-*.DS_Store
-data/.DS_Store
-.env
-*.zip
 
+# config files
+.env
+config.json
+
+# folders
 data/input/picarro
 data/output
-
 screenshots
