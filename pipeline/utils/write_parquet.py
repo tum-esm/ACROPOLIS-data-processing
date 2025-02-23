@@ -15,7 +15,9 @@ def write_split_years(df: pl.DataFrame,
 
         if prefix is not None:
             df.filter(pl.col("datetime").dt.year() == year).write_parquet(
-                os.path.join(data_path, f"{prefix}_acropolis-{id}.parquet"))
+                os.path.join(data_path, f"{prefix}_acropolis-{id}.parquet"),
+                row_group_size=100_000)
         else:
             df.filter(pl.col("datetime").dt.year() == year).write_parquet(
-                os.path.join(data_path, f"acropolis-{id}.parquet"))
+                os.path.join(data_path, f"acropolis-{id}.parquet"),
+                row_group_size=100_000)

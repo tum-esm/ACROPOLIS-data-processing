@@ -6,7 +6,7 @@ from utils.paths import THINGSBOARD_DATA_DIRECTORY
 
 
 # Import system specific raw data
-def import_acropolis_system_data(years: list[int], id: int) -> pl.DataFrame:
+def import_acropolis_system_data(years: list[int], id: int) -> pl.LazyFrame:
     paths = []
     df_years = []
 
