@@ -1,20 +1,22 @@
 import polars as pl
+import os
 
 from utils.config_files import load_json_config
 from utils.import_system_data import import_acropolis_system_data
 from utils.filter_system_data import extract_wind_data, extraxt_auxilliary_data, extract_edge_calibration_data, extract_measurement_data, extract_calibration_data
 from utils.dilution_correction import wet_to_dry_mole_fraction
 from utils.calibration_processing import calculate_slope_intercept, apply_slope_intercept
+from utils.write_parquet import write_split_years
 
 from utils.paths import PIPELINE_OUTPUT_DIRECTORY
 
 config = load_json_config("config.json")
 
 id = 6
-print_steps = True
 
 # Import system data
-df_raw = import_acropolis_system_data(years=config["input_years"], id=id)
+df_raw = import_acropolis_system_data(
+    years=config["postprocessing"]["input_years"], id=id)
 
 # Extract data
 df_wind = extract_wind_data(df_raw)
@@ -33,24 +35,29 @@ df = df_measurement.group_by_dynamic("datetime", every='1m', group_by=["system_i
 # Process measurement data
 df = df.pipe(wet_to_dry_mole_fraction) \
     .pipe(apply_slope_intercept, df_slope_intercept) \
-    .join_asof(df_wind, on="datetime", strategy="nearest") \
-    .join_asof(df_aux, on="datetime", strategy="nearest") \
-    .join_asof(df_edge_cal, on="datetime", strategy="nearest") \
+    .join_asof(df_wind, on="datetime", strategy="nearest", tolerance="2m") \
+    .join_asof(df_aux, on="datetime", strategy="nearest", tolerance="2m") \
+    .join_asof(df_edge_cal, on="datetime", strategy="nearest", tolerance="1d") \
     .drop("^.*_right$")
 
-# Aggregate to 10 minute intervals
-df_10min = df.sort("datetime") \
-        .group_by_dynamic("datetime", every='10m', group_by=["system_id", "system_name"]) \
-        .agg(pl.all().exclude(["datetime","system_name"]).mean(),
-                pl.col("gmp343_corrected").std().alias("std"),
-                pl.col("gmp343_corrected").var().alias("var"))
+# Save data
+write_split_years(df=df,
+                  id=id,
+                  target_directory=PIPELINE_OUTPUT_DIRECTORY,
+                  prefix="1min")
 
 # Aggregate to 1 hour intervals
 df_1h = df.sort("datetime") \
         .group_by_dynamic("datetime", every='1h', group_by=["system_id", "system_name"]) \
         .agg(pl.all().exclude(["datetime","system_name"]).mean(),
-                pl.col("gmp343_corrected").std().alias("std"),
-                pl.col("gmp343_corrected").var().alias("var"))
+                pl.col("gmp343_corrected").std().alias("gmp343_corrected_std"),
+                pl.col("gmp343_corrected").var().alias("gmp343_corrected_var"))
+
+# Save data
+write_split_years(df=df,
+                  id=id,
+                  target_directory=PIPELINE_OUTPUT_DIRECTORY,
+                  prefix="1h")
 
 # import plotly.express as px
 # fig = px.line(

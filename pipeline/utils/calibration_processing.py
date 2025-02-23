@@ -87,6 +87,8 @@ def apply_slope_intercept(df: pl.DataFrame,
             pl.col("intercept").interpolate().alias("intercept_interpolated")
             ]) \
         .with_columns([
+            pl.col("slope").forward_fill().backward_fill(),
+            pl.col("intercept").forward_fill().backward_fill(),
             pl.col("slope_interpolated").forward_fill().backward_fill(),
             pl.col("intercept_interpolated").forward_fill().backward_fill(),
             ]) \

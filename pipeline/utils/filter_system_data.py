@@ -49,3 +49,8 @@ def extract_calibration_data(df_raw: pl.DataFrame) -> pl.DataFrame:
     .select("datetime","system_id", '^cal_.*$') \
     .filter((pl.col("cal_bottle_id") > 0) & (pl.col("cal_bottle_id") <= df_gas["cal_bottle_id"].max())) \
     .collect()
+
+
+def extract_years(df: pl.DataFrame) -> list[int]:
+    #extract years from df_raw
+    return df["datetime"].dt.year().unique().to_list()
