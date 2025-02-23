@@ -76,7 +76,7 @@ class _ExtractMeasurements(quickflow_blocks.Component):
 
             return last_timestamp
 
-        except FileNotFoundError:
+        except Exception:
             # download from start
             return [None]
 
@@ -242,8 +242,8 @@ class Extract(quickflow_blocks.Composite):
 
     def __init__(self, chunksize=2**16, reset=False):
         self._components = [
-            _ExtractMeasurements(chunksize=chunksize),
-            _ExtractMetadata(),
+            #_ExtractMeasurements(chunksize=chunksize),
+            #_ExtractMetadata(),
             _Merge(),
         ]
         if reset:
