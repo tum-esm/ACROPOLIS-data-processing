@@ -1,5 +1,4 @@
 import polars as pl
-import polars.selectors as cs
 import gc
 import os
 import time
@@ -49,7 +48,7 @@ for id in config["postprocessing"]["system_ids"]:
 
     # Apply the Hampel filter
     result = hampel(data,
-                    window_size=120,
+                    window_size=config["despiking"]["window_size"],
                     n_sigma=config["despiking"]["n_sigma"])
 
     # Print share of detected spikes
