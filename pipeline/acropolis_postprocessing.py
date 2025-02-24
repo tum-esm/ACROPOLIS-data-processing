@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 
 from utils.config_files import load_json_config
-from utils.import_system_data import import_acropolis_system_data
+from utils.import_data import import_acropolis_system_data
 from utils.filter_system_data import extract_wind_data, extraxt_auxilliary_data, extract_edge_calibration_data, extract_measurement_data, extract_calibration_data
 from utils.dilution_correction import wet_to_dry_mole_fraction
 from utils.calibration_processing import calculate_slope_intercept, apply_slope_intercept

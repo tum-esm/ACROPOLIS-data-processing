@@ -6,7 +6,7 @@ from hampel import hampel
 from datetime import datetime
 
 from utils.config_files import load_json_config
-from utils.import_system_data import import_acropolis_system_data
+from utils.import_data import import_acropolis_system_data
 from utils.write_parquet import write_split_years
 
 from utils.paths import DESPIKED_DATA_DIRECTORY, POSTPROCESSED_DATA_DIRECTORY
