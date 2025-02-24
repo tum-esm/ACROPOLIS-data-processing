@@ -1,8 +1,10 @@
 import warnings
 import polars as pl
 import numpy
+import os
 
-from .paths import AVERAGED_GASES
+DATA_DIRECTORY = os.environ.get("DATA_DIRECTORY")
+AVERAGED_GASES = os.path.join(DATA_DIRECTORY, "input", "averaged_gases.csv")
 
 warnings.simplefilter("ignore", category=FutureWarning)
 
