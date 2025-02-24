@@ -19,7 +19,7 @@ start_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 print(f"Script started at: {start_datetime}")
 
-for id in config["postprocessing"]["system_ids"]:
+for id in config["despiking"]["system_ids"]:
 
     print("Processing system with id:", id)
     # Import system data
