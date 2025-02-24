@@ -2,6 +2,7 @@ import polars as pl
 import polars.selectors as cs
 import gc
 import time
+import os
 from datetime import datetime
 
 from utils.config_files import load_json_config
@@ -11,7 +12,7 @@ from utils.dilution_correction import wet_to_dry_mole_fraction
 from utils.calibration_processing import calculate_slope_intercept, apply_slope_intercept
 from utils.write_parquet import write_split_years
 
-from utils.paths import PIPELINE_OUTPUT_DIRECTORY
+from utils.paths import POSTPROCESSED_DATA_DIRECTORY, THINGSBOARD_DATA_DIRECTORY
 
 config = load_json_config("config.json")
 
@@ -25,7 +26,10 @@ for id in config["postprocessing"]["system_ids"]:
     print("Processing system with id:", id)
     # Import system data
     df_raw = import_acropolis_system_data(
-        years=config["postprocessing"]["input_years"], id=id)
+        years=config["postprocessing"]["input_years"],
+        target_directory=THINGSBOARD_DATA_DIRECTORY,
+        id=id,
+    )
 
     # Extract data
     df = extract_measurement_data(df_raw)
@@ -57,7 +61,7 @@ for id in config["postprocessing"]["system_ids"]:
     print("Writing 1m data to parquet. Length:", len(df))
     write_split_years(df=df,
                       id=id,
-                      target_directory=PIPELINE_OUTPUT_DIRECTORY,
+                      target_directory=POSTPROCESSED_DATA_DIRECTORY,
                       prefix="1min")
 
     # Aggregate to 1 hour intervals
@@ -73,7 +77,7 @@ for id in config["postprocessing"]["system_ids"]:
     print("Writing 1h data to parquet. Length:", len(df_1h))
     write_split_years(df=df_1h,
                       id=id,
-                      target_directory=PIPELINE_OUTPUT_DIRECTORY,
+                      target_directory=POSTPROCESSED_DATA_DIRECTORY,
                       prefix="1h")
 
     # Clear memory
