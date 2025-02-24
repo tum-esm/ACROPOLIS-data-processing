@@ -11,6 +11,7 @@ THINGSBOARD_DATA_DIRECTORY = os.environ.get("THINGSBOARD_DATA_DIRECTORY")
 AVERAGED_GASES = os.path.join(DATA_DIRECTORY, "input", "averaged_gases.csv")
 CONFIG_DIRECTORY = os.path.join(PROJECT_DIR, "config")
 
+
 #Output
 PIPELINE_DATA_DIRECTORY = os.path.join(DATA_DIRECTORY, "output", "pipeline")
 POSTPROCESSED_DATA_DIRECTORY = os.path.join(PIPELINE_DATA_DIRECTORY,
