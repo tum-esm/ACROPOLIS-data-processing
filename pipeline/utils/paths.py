@@ -16,6 +16,9 @@ DATA_DIRECTORY = os.path.join(PROJECT_DIR, "data")
 
 AVERAGED_GASES = os.path.join(DATA_DIRECTORY, "input", "averaged_gases.csv")
 
+PROCESSED_PICARRO_DATA_DIRECTORY = os.path.join(DATA_DIRECTORY, "input",
+                                                "picarro")
+
 PIPELINE_DATA_DIRECTORY = os.path.join(DATA_DIRECTORY, "output", "pipeline")
 
 POSTPROCESSED_DATA_DIRECTORY = os.path.join(PIPELINE_DATA_DIRECTORY,
