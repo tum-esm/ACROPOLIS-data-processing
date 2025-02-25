@@ -50,3 +50,5 @@ def extract_calibration_data(df_raw: pl.LazyFrame) -> pl.DataFrame:
 def extract_years(df: pl.LazyFrame) -> list[int]:
     #extract years from df_raw
     return df["datetime"].dt.year().unique().to_list()
+
+

@@ -1,6 +1,10 @@
 import os
 import json
-from .paths import CONFIG_DIRECTORY
+
+PROJECT_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+CONFIG_DIRECTORY = os.path.join(PROJECT_DIR, "pipeline", "config")
 
 
 def load_json_config(file_name: str) -> dict:
