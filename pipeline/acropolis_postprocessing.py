@@ -10,6 +10,7 @@ from utils.import_data import import_acropolis_system_data
 from utils.filter_system_data import extract_wind_data, extraxt_auxilliary_data, extract_edge_calibration_data, extract_measurement_data, extract_calibration_data
 from utils.dilution_correction import wet_to_dry_mole_fraction
 from utils.calibration_processing import calculate_slope_intercept, apply_slope_intercept
+from utils.dataframe_operations import join_slice
 from utils.write_parquet import write_split_years
 
 from utils.paths import POSTPROCESSED_DATA_DIRECTORY, THINGSBOARD_DATA_DIRECTORY
@@ -51,11 +52,12 @@ for id in config["postprocessing"]["system_ids"]:
     # Process measurement data
     df = df.pipe(wet_to_dry_mole_fraction) \
         .pipe(apply_slope_intercept, df_slope_intercept) \
-        .join_asof(df_wind, on="datetime", strategy="nearest", tolerance="2m") \
-        .join_asof(df_aux, on="datetime", strategy="nearest", tolerance="2m") \
-        .join_asof(df_edge_cal, on="datetime", strategy="nearest", tolerance="1d") \
-        .drop("^.*_right$") \
-        .collect()
+        .collect() \
+        .pipe(join_slice, df_wind, "2m") \
+        .pipe(join_slice, df_aux, "2m") \
+        .pipe(join_slice, df_edge_cal, "1d")
+
+    df = df.drop("^.*_right$")
 
     # Save data
     print("Writing 1m data to parquet. Length:", len(df))

@@ -22,9 +22,9 @@ def import_acropolis_system_data(years: list[int],
         file_name = f"acropolis-{id}.parquet"
 
     for year in years:
-        paths += sorted(glob.glob(
-            os.path.join(target_directory, str(year), file_name)),
-                        key=os.path.getmtime)
+        path = os.path.join(target_directory, str(year), file_name)
+        if os.path.exists(path):
+            paths += sorted(glob.glob(path), key=os.path.getmtime)
 
     for path in paths:
         if os.path.isfile(path):
