@@ -10,7 +10,7 @@ from utils.import_data import import_acropolis_system_data
 from utils.filter_system_data import extract_wind_data, extraxt_auxilliary_data, extract_edge_calibration_data, extract_measurement_data, extract_calibration_data
 from utils.dilution_correction import wet_to_dry_mole_fraction
 from utils.calibration_processing import calculate_slope_intercept, apply_slope_intercept
-from utils.dataframe_operations import join_slice
+from utils.dataframe_operations import join_slice, concat_dataframe
 from utils.write_parquet import write_split_years
 
 from utils.paths import POSTPROCESSED_DATA_DIRECTORY, THINGSBOARD_DATA_DIRECTORY
@@ -42,8 +42,8 @@ for id in config["postprocessing"]["system_ids"]:
     # Calculate slope and intercept
     df_slope_intercept = calculate_slope_intercept(df_calibration)
 
-    del df_calibration
-    gc.collect()  # Explicitly run garbage collection
+    #del df_calibration
+    #gc.collect()  # Explicitly run garbage collection
 
     # Aggregate to 1 minute intervals
     df = df.group_by_dynamic("datetime", every='1m', group_by=["system_id", "system_name"]) \
@@ -55,9 +55,10 @@ for id in config["postprocessing"]["system_ids"]:
         .collect() \
         .pipe(join_slice, df_wind, "2m") \
         .pipe(join_slice, df_aux, "2m") \
-        .pipe(join_slice, df_edge_cal, "1d")
-
-    df = df.drop("^.*_right$")
+        .pipe(join_slice, df_edge_cal, "1d") \
+        .pipe(concat_dataframe, df_calibration, "diagonal") \
+        .drop("^.*_right$") \
+        .sort("datetime")
 
     # Save data
     print("Writing 1m data to parquet. Length:", len(df))
