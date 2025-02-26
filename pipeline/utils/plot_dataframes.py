@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import plotly.express as px
 import math
+from typing import Optional
 
 
 def plot_column(df: pl.DataFrame,
@@ -133,33 +134,23 @@ def plot_column_difference(df: pl.DataFrame,
     plt.show()
 
 
-def plot_sensor_measurement(
-    df,
-    sensor_id,
-    col_name: str,
-    cut_below: float | None = None,
-    cut_above: float | None = None,
-):
-    df = df.select("datetime", "system_id", col_name).sort("datetime")
+def plot_sensor_measurement(df,
+                            sensor_id,
+                            col_name: str,
+                            cut_below: Optional[int] = None,
+                            cut_above: Optional[int] = None):
+    df = df.select("datetime", "system_id", col_name) \
+        .sort("system_id") \
+        .filter(pl.col("system_id").is_in(sensor_id)) \
+        .filter(pl.col(col_name).is_not_nan())
 
-    l_df = []
-
-    for id in sensor_id:
-        df_t = df.filter(pl.col("system_id") == id).filter(
-            pl.col(col_name) > 0)
-        # additional filters < and >
-        if cut_below != None:
-            df_t = df_t.filter(pl.col(col_name) > cut_below)
-
-        if cut_above != None:
-            df_t = df_t.filter(pl.col(col_name) < cut_above)
-
-        l_df.append(df_t)
-
-    df_agg = pl.concat(l_df, how="vertical")
+    if cut_below:
+        df = df.filter(pl.col(col_name) < cut_below)
+    if cut_above:
+        df = df.filter(pl.col(col_name) > -cut_above)
 
     fig = px.line(
-        df_agg,
+        df,
         x="datetime",
         y=col_name,
         markers=True,
