@@ -93,10 +93,3 @@ end_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 print(f"Script ended at: {end_datetime}")
 print(f"Total duration: {duration:.2f} seconds")
-
-# import plotly.express as px
-# fig = px.line(
-#     df_1h,
-#     x="datetime",
-#     y=["cal_gmp343_slope", "wxt532_direction_avg", "wxt532_speed_avg"])
-# fig.show()
