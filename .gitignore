@@ -1,13 +1,18 @@
-config.json
+__pycache__
 .venv
+*.DS_Store
+
+# data files
+*.zip
 *.dat
 *.pyc
 *.parquet
-*.DS_Store
-data/.DS_Store
-.env
-*.zip
-data/processed/icos_cities_portal_processing/level_1/*.csv
-data/processed/icos_cities_portal_processing/level_2/*.csv
 
+# config files
+.env
+config.json
+
+# folders
+data/input/picarro
+data/output
 screenshots

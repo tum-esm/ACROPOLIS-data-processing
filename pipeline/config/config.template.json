@@ -1,0 +1,27 @@
+{
+    "measurement_data_paths":{
+        "picarro": ".../data/",
+        "acropolis": ".../data/"
+    },
+    "postprocessing": {
+        "system_ids": [1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+        "input_years": [2024,2025]
+    },
+    "despiking":{
+        "system_ids": [1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+        "input_years": [2024,2025],
+        "n_sigma": 3.0,
+        "window_size": 120
+    },
+    "icos_cities_portal": {
+        "site_names": [
+            "TUMR", "FELR", "TAUR", "DLRR", "SENR", "RDIR", "SCHR", "FINR",
+            "SWMR", "MAIR", "PASR", "GROR", "BLUT_48", "BLUT_85", "NPLR", 
+            "BOGR", "HARR", "BALR"
+        ],
+        "input_years": [2024,2025],
+        "portal_user": "user@mail.de",
+        "portal_password": "..."
+
+    }
+}

@@ -9,7 +9,7 @@ The repository is work in progress and can experience breaking changes.
 ## Installation
 
 ```bash
-python3.11 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 poetry install
 ```
