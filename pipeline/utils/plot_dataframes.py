@@ -137,7 +137,6 @@ def plot_sensor_measurement(
     df,
     sensor_id,
     col_name: str,
-    filter="1h",
     cut_below: float | None = None,
     cut_above: float | None = None,
 ):
@@ -154,12 +153,6 @@ def plot_sensor_measurement(
 
         if cut_above != None:
             df_t = df_t.filter(pl.col(col_name) < cut_above)
-
-        # time averaging
-        if filter != None:
-            df_t = (df_t.groupby_dynamic("datetime", every=filter).agg([
-                pl.all().exclude(["datetime"]).mean(),
-            ]).with_columns(pl.lit(id).alias("system_id")))
 
         l_df.append(df_t)
 
@@ -192,8 +185,8 @@ def plot_wind_rose(df, id: int, location: str):
             lambda t: math.ceil(t * 2) / 2,
             return_dtype=float).alias("strength"))
     # groupby relevant bins
-    df_w = df_w.groupby(["cardinal_direction",
-                         "strength"]).count().sort("strength")
+    df_w = df_w.group_by(["cardinal_direction",
+                          "strength"]).count().sort("strength")
 
     fig = px.bar_polar(
         df_w,
@@ -245,8 +238,8 @@ def plot_co2_rose(df, id: int, location: str):
             lambda t: math.ceil(t * 2) / 2,
             return_dtype=float).alias("CO2 concentration (ppm)"))
     # groupby relevant bins
-    df_w = (df_w.groupby(["cardinal_direction", "CO2 concentration (ppm)"
-                          ]).count().sort("CO2 concentration (ppm)"))
+    df_w = (df_w.group_by(["cardinal_direction", "CO2 concentration (ppm)"
+                           ]).count().sort("CO2 concentration (ppm)"))
 
     fig = px.bar_polar(
         df_w,
