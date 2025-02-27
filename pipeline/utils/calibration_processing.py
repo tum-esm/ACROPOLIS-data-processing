@@ -43,6 +43,14 @@ def two_point_calibration(measured_values: list, true_values: list):
 
 
 def calculate_slope_intercept(df: pl.DataFrame) -> pl.LazyFrame:
+    """
+    Calculate slope and intercept for each calibration bottle and each calibration day
+    (1) Groupy by date, system_id, cal_bottle_id to a list of calibration values
+    (2) Process list of calibration values with function process_bottle
+    (3) Group by date, system_id to bundle both calibration cylinder results
+    (4) Calculate slope and intercept with function two_point_calibration
+    (5) Filter out invalid calibration results (i.e. unreasonable slopes from outliers)
+    """
     return df.join(df_gas.cast({"cal_bottle_id": pl.Float64}), on=["cal_bottle_id"], how="left", coalesce=True) \
     .with_columns((pl.col("datetime").dt.date()).alias("date")) \
     .sort("date") \
