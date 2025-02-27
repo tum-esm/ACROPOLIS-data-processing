@@ -54,7 +54,7 @@ def calculate_slope_intercept(df: pl.DataFrame) -> pl.LazyFrame:
     Info: 
     - Does only work for a frequency of 1 calibration (2 bottles) per day. Else it groups all calibration attemps for the day together.
     - Can handle any sequence of calibration bottles (high, low) or (low, high)
-    - Can handle any freuqncy of calibration days >= 1
+    - Can handle any freuqency of calibration days >= 1
     
     :param df: DataFrame with calibration data
     :return: DataFrame with slope and intercept for each calibration
