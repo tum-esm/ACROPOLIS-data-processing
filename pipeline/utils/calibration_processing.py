@@ -47,9 +47,17 @@ def calculate_slope_intercept(df: pl.DataFrame) -> pl.LazyFrame:
     Calculate slope and intercept for each calibration bottle and each calibration day
     (1) Groupy by date, system_id, cal_bottle_id to create a list of calibration values for each bottle_id
     (2) Process list of calibration values with function process_bottle
-    (3) Group by date, system_id to bundle both calibration cylinder results
+    (3) Group by date, system_id to bundle both calibration cylinder results from each day
     (4) Calculate slope and intercept with function two_point_calibration
     (5) Filter out invalid calibration results (i.e. unreasonable slopes from outliers)
+    
+    Info: 
+    - Does only work for a frequency of 1 calibration (2 bottles) per day. Else it groups all calibration attemps for the day together.
+    - Can handle any sequence of calibration bottles (high, low) or (low, high)
+    - Can handle any freuqncy of calibration days >= 1
+    
+    :param df: DataFrame with calibration data
+    :return: DataFrame with slope and intercept for each calibration
     """
     return df.join(df_gas.cast({"cal_bottle_id": pl.Float64}), on=["cal_bottle_id"], how="left", coalesce=True) \
     .with_columns((pl.col("datetime").dt.date()).alias("date")) \
