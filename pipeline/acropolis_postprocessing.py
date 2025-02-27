@@ -39,11 +39,17 @@ for id in config["postprocessing"]["system_ids"]:
     df_edge_cal = extract_edge_calibration_data(df_raw)
     df_calibration = extract_calibration_data(df_raw)
 
+    # Save cal data
+    write_split_years(df=df_calibration,
+                      id=id,
+                      target_directory=POSTPROCESSED_DATA_DIRECTORY,
+                      prefix="Cal_1min")
+
     # Calculate slope and intercept
     df_slope_intercept = calculate_slope_intercept(df_calibration)
 
-    #del df_calibration
-    #gc.collect()  # Explicitly run garbage collection
+    del df_calibration
+    gc.collect()  # Explicitly run garbage collection
 
     # Aggregate to 1 minute intervals
     df = df.group_by_dynamic("datetime", every='1m', group_by=["system_id", "system_name"]) \
@@ -56,7 +62,6 @@ for id in config["postprocessing"]["system_ids"]:
         .pipe(join_slice, df_wind, "2m") \
         .pipe(join_slice, df_aux, "2m") \
         .pipe(join_slice, df_edge_cal, "1d") \
-        .pipe(concat_dataframe, df_calibration, "diagonal") \
         .drop("^.*_right$") \
         .sort("datetime")
 
