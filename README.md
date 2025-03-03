@@ -50,6 +50,14 @@ python pipeline/L1_icos_cities_portal.py
 
 ---
 
+## Available Jupyter Notebooks
+
+```
+tbd
+```
+
+---
+
 ## Running Type Checks (MyPy)
 
 To ensure type safety and catch potential errors, run:
