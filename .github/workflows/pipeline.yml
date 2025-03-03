@@ -1,0 +1,45 @@
+name: "test-main"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-codebase:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .  # Set working directory to root.
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12.7"
+
+      # Remove existing virtual environment if it's broken
+      - name: Remove existing virtual environment (if any)
+        run: |
+          rm -rf .venv
+
+      # Install Poetry
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.8.2
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      # Force Poetry to create a fresh virtual environment and install all dependencies
+      - name: Install dependencies
+        run: poetry install --with=dev
+
+      # Run static type analysis
+      - name: Run static type analysis
+        run: poetry run mypy --explicit-package-bases .
