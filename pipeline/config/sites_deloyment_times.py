@@ -196,6 +196,11 @@ deployment_times = {
             {
                 "id": 17,
                 "start_time": "2024-07-09T00:00:00+0000",
+                "end_time": "2025-03-03T11:27:00+0000"
+            },
+            {
+                "id": 2,
+                "start_time": "2025-03-03T11:29:00+0000",
                 "end_time": current_date
             },
         ],
