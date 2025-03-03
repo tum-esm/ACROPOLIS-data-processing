@@ -2,6 +2,7 @@ import polars as pl
 import polars.selectors as cs
 import gc
 import time
+import logging
 import os
 from datetime import datetime
 
@@ -9,22 +10,41 @@ from utils.config_files import load_json_config
 from utils.import_data import import_acropolis_system_data
 from utils.filter_system_data import extract_wind_data, extraxt_auxilliary_data, extract_edge_calibration_data, extract_measurement_data, extract_calibration_data
 from utils.dilution_correction import wet_to_dry_mole_fraction
+from utils.os_functions import ensure_data_dir
 from utils.calibration_processing import calculate_slope_intercept, apply_slope_intercept
 from utils.dataframe_operations import join_slice
 from utils.write_parquet import write_split_years
 
-from utils.paths import POSTPROCESSED_DATA_DIRECTORY, THINGSBOARD_DATA_DIRECTORY
+from utils.paths import POSTPROCESSED_DATA_DIRECTORY, THINGSBOARD_DATA_DIRECTORY, LOG_DIRECTORY
 
 config = load_json_config("config.json")
+
+# Create a log file with the current date (YYYY-MM-DD)
+ensure_data_dir(LOG_DIRECTORY)
+log_filename = os.path.join(LOG_DIRECTORY,
+                            f"{datetime.now().strftime('%Y-%m-%d')}.log")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format=
+    "%(asctime)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s",
+    handlers=[
+        logging.FileHandler(log_filename),
+        logging.StreamHandler(
+        )  # This allows logs to be printed to the console as well
+    ])
+
+logging.info("=========================================")
+logging.info("Starting processing ACROPOLIS raw data")
 
 # Record start time
 start_time = time.time()
 start_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-print(f"Script started at: {start_datetime}")
+logging.info(f"Script started at: {start_datetime}")
 
 for id in config["postprocessing"]["system_ids"]:
-    print("Processing system with id:", id)
+    logging.info(f"Processing system with id: {id}")
     # Import system data
     df_raw = import_acropolis_system_data(
         years=config["postprocessing"]["input_years"],
@@ -66,7 +86,7 @@ for id in config["postprocessing"]["system_ids"]:
         .sort("datetime")
 
     # Save data
-    print("Writing 1m data to parquet. Length:", len(df))
+    logging.info(f"Writing 1m data to parquet. Length: {len(df)}")
     write_split_years(df=df,
                       id=id,
                       target_directory=POSTPROCESSED_DATA_DIRECTORY,
@@ -82,7 +102,7 @@ for id in config["postprocessing"]["system_ids"]:
               ])
 
     # Save data
-    print("Writing 1h data to parquet. Length:", len(df_1h))
+    logging.info(f"Writing 1h data to parquet. Length: {len(df_1h)}")
     write_split_years(df=df_1h,
                       id=id,
                       target_directory=POSTPROCESSED_DATA_DIRECTORY,
@@ -97,5 +117,5 @@ end_time = time.time()
 duration = end_time - start_time
 end_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-print(f"Script ended at: {end_datetime}")
-print(f"Total duration: {duration:.2f} seconds")
+logging.info(f"Script ended at: {end_datetime}")
+logging.info(f"Total duration: {duration:.2f} seconds")
