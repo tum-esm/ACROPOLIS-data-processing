@@ -9,8 +9,14 @@ from datetime import datetime
 from utils.config_files import load_json_config
 from utils.import_data import import_acropolis_system_data
 from utils.write_parquet import write_split_years
+from utils.os_functions import ensure_data_dir
 
 from utils.paths import DESPIKED_DATA_DIRECTORY, POSTPROCESSED_DATA_DIRECTORY, LOG_DIRECTORY
+
+assert (os.path.exists(POSTPROCESSED_DATA_DIRECTORY),
+        "Postprocessed data directory does not exist")
+ensure_data_dir(DESPIKED_DATA_DIRECTORY)
+ensure_data_dir(LOG_DIRECTORY)
 
 config = load_json_config("config.json")
 

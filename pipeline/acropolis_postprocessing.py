@@ -17,10 +17,14 @@ from utils.write_parquet import write_split_years
 
 from utils.paths import POSTPROCESSED_DATA_DIRECTORY, THINGSBOARD_DATA_DIRECTORY, LOG_DIRECTORY
 
+assert (os.path.exists(THINGSBOARD_DATA_DIRECTORY),
+        "Thingsboard data directory does not exist")
+ensure_data_dir(POSTPROCESSED_DATA_DIRECTORY)
+ensure_data_dir(LOG_DIRECTORY)
+
 config = load_json_config("config.json")
 
 # Create a log file with the current date (YYYY-MM-DD)
-ensure_data_dir(LOG_DIRECTORY)
 log_filename = os.path.join(LOG_DIRECTORY,
                             f"{datetime.now().strftime('%Y-%m-%d')}.log")
 
