@@ -31,6 +31,7 @@ urllib3 = "^2.3.0"
 ipykernel = "^6.24.0"
 types-requests = "^2.32.0.20241016"
 mypy = "^1.14.1"
+plotly-stubs = "^0.0.4"
 
 [build-system]
 requires = ["poetry-core"]

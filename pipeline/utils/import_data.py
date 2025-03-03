@@ -2,6 +2,7 @@ import polars as pl
 import glob
 import os
 from datetime import datetime
+from typing import Optional
 
 from .config_files import load_json_config
 
@@ -12,7 +13,7 @@ config = load_json_config("config.json")
 def import_acropolis_system_data(years: list[int],
                                  target_directory: str,
                                  id: int,
-                                 prefix: str = None) -> pl.LazyFrame:
+                                 prefix: Optional[str] = None) -> pl.LazyFrame:
     paths = []
     df_years = []
 

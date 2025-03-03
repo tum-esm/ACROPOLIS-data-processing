@@ -4,14 +4,14 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import plotly.express as px
 import math
-from typing import Optional
+from typing import Optional, Any
 
 
 def plot_column(df: pl.DataFrame,
                 datetime_col: str,
                 col1: str,
                 sample_size: int = 10000,
-                filter_value: int = 1000):
+                filter_value: int = 1000) -> None:
     """
     Plots the column over a datetime index.
     
@@ -72,7 +72,7 @@ def plot_column_difference(df: pl.DataFrame,
                            col1: str,
                            col2: str,
                            sample_size: int = 10000,
-                           filter_value: int = 1000):
+                           filter_value: int = 1000) -> None:
     """
     Plots the difference between two columns over a datetime index.
     
@@ -138,7 +138,7 @@ def plot_sensor_measurement(df,
                             sensor_id,
                             col_name: str,
                             cut_below: Optional[int] = None,
-                            cut_above: Optional[int] = None):
+                            cut_above: Optional[int] = None) -> None:
     df = df.select("datetime", "system_id", col_name) \
         .sort("system_id") \
         .filter(pl.col("system_id").is_in(sensor_id)) \
@@ -160,7 +160,7 @@ def plot_sensor_measurement(df,
     fig.show()
 
 
-def plot_wind_rose(df, id: int, location: str):
+def plot_wind_rose(df, id: int, location: str) -> None:
     df_w = df.clone()
     # filter for system
     df_w = df_w.filter(pl.col("system_id") == id).filter(
@@ -169,12 +169,12 @@ def plot_wind_rose(df, id: int, location: str):
     df_w = df_w.with_columns(
         pl.col("wxt532_direction_avg").map_elements(
             find_closest_cardinal_direction,
-            return_dtype=float).alias("cardinal_direction"))
+            return_dtype=pl.Float32).alias("cardinal_direction"))
     # create bins for wind speed
     df_w = df_w.with_columns(
         pl.col("wxt532_speed_avg").map_elements(
             lambda t: math.ceil(t * 2) / 2,
-            return_dtype=float).alias("strength"))
+            return_dtype=pl.Float32).alias("strength"))
     # groupby relevant bins
     df_w = df_w.group_by(["cardinal_direction",
                           "strength"]).count().sort("strength")
@@ -213,7 +213,7 @@ def plot_wind_rose(df, id: int, location: str):
     fig.show()
 
 
-def plot_co2_rose(df, id: int, location: str):
+def plot_co2_rose(df, id: int, location: str) -> None:
     df_w = df.clone()
     # filter for system
     df_w = df_w.filter(pl.col("system_id") == id).filter(
@@ -222,12 +222,12 @@ def plot_co2_rose(df, id: int, location: str):
     df_w = df_w.with_columns(
         pl.col("wxt532_direction_avg").map_elements(
             find_closest_cardinal_direction,
-            return_dtype=float).alias("cardinal_direction"))
+            return_dtype=pl.Float32).alias("cardinal_direction"))
     # create bins for wind speed
     df_w = df_w.with_columns(
         pl.col("gmp343_corrected").map_elements(
             lambda t: math.ceil(t * 2) / 2,
-            return_dtype=float).alias("CO2 concentration (ppm)"))
+            return_dtype=pl.Float32).alias("CO2 concentration (ppm)"))
     # groupby relevant bins
     df_w = (df_w.group_by(["cardinal_direction", "CO2 concentration (ppm)"
                            ]).count().sort("CO2 concentration (ppm)"))
@@ -266,7 +266,7 @@ def plot_co2_rose(df, id: int, location: str):
     fig.show()
 
 
-def find_closest_cardinal_direction(degree: float):
+def find_closest_cardinal_direction(degree: float) -> float:
     # Normalize the degree value to be between 0 and 360
     degree = degree % 360
 
@@ -291,7 +291,6 @@ def find_closest_cardinal_direction(degree: float):
     }
 
     # Initialize variables to keep track of the closest direction and its degree difference
-    closest_direction = None
     min_difference = float("inf")
 
     # Iterate over the directions and calculate the difference in degrees

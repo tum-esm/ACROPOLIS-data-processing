@@ -53,7 +53,7 @@ for id in config["postprocessing"]["system_ids"]:
     )
 
     # Extract data
-    df = extract_measurement_data(df_raw)
+    df_lazy = extract_measurement_data(df_raw)
     df_wind = extract_wind_data(df_raw)
     df_aux = extraxt_auxilliary_data(df_raw)
     df_edge_cal = extract_edge_calibration_data(df_raw)
@@ -72,13 +72,13 @@ for id in config["postprocessing"]["system_ids"]:
     gc.collect()  # Explicitly run garbage collection
 
     # Aggregate to 1 minute intervals
-    df = df.group_by_dynamic("datetime", every='1m', group_by=["system_id", "system_name"]) \
-            .agg(cs.numeric().mean())
+    df = df_lazy.group_by_dynamic("datetime", every='1m', group_by=["system_id", "system_name"]) \
+            .agg(cs.numeric().mean()) \
+            .collect()
 
     # Process measurement data
     df = df.pipe(wet_to_dry_mole_fraction) \
         .pipe(apply_slope_intercept, df_slope_intercept) \
-        .collect() \
         .pipe(join_slice, df_wind, "2m") \
         .pipe(join_slice, df_aux, "2m") \
         .pipe(join_slice, df_edge_cal, "1d") \

@@ -3,7 +3,7 @@ import gc
 import os
 import logging
 import time
-from hampel import hampel
+from hampel import hampel  # type: ignore
 from datetime import datetime
 
 from utils.config_files import load_json_config
@@ -74,7 +74,7 @@ for id in config["despiking"]["system_ids"]:
     )
 
     # Create column "Flag" = 'H' indicating local contamination
-    df = df.with_columns((pl.from_pandas(result.filtered_data)).alias("co2_hampel_filtered")) \
+    df = df.with_columns(pl.Series("co2_hampel_filtered", result.filtered_data)) \
         .with_columns(pl.when(pl.col("gmp343_corrected").ne(pl.col("co2_hampel_filtered"))).then(pl.lit('H')).otherwise(pl.lit('U')).alias("Flag")) \
         .drop("co2_hampel_filtered") \
         .cast({"gmp343_corrected": pl.Float64})

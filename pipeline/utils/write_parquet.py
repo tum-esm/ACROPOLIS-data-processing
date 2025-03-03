@@ -1,5 +1,6 @@
 import polars as pl
 import os
+from typing import Optional
 
 from utils.filter_system_data import extract_years
 from utils.os_functions import ensure_data_dir
@@ -8,7 +9,7 @@ from utils.os_functions import ensure_data_dir
 def write_split_years(df: pl.DataFrame,
                       target_directory: str,
                       id: int,
-                      prefix: str = None) -> None:
+                      prefix: Optional[str] = None) -> None:
     for year in extract_years(df):
         data_path = os.path.join(target_directory, str(year))
         ensure_data_dir(data_path)

@@ -22,6 +22,7 @@ PROCESSED_PICARRO_DATA_DIRECTORY = os.path.join(DATA_DIRECTORY, "input",
 PIPELINE_DATA_DIRECTORY = os.path.join(DATA_DIRECTORY, "output", "pipeline")
 
 LOG_DIRECTORY = os.path.join(PROJECT_DIR, "pipeline", "logs")
+CONFIG_DIRECTORY = os.path.join(PROJECT_DIR, "pipeline", "config")
 
 POSTPROCESSED_DATA_DIRECTORY = os.path.join(PIPELINE_DATA_DIRECTORY,
                                             "postprocessed")

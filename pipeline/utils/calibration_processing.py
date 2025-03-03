@@ -42,7 +42,7 @@ def two_point_calibration(measured_values: list, true_values: list):
     return {"slope": slope, "intercept": intercept}
 
 
-def calculate_slope_intercept(df: pl.DataFrame) -> pl.LazyFrame:
+def calculate_slope_intercept(df: pl.DataFrame) -> pl.DataFrame:
     """
     Calculate slope and intercept for each calibration bottle and each calibration day
     (1) Groupy by date, system_id, cal_bottle_id to create a list of calibration values for each bottle_id
@@ -91,8 +91,7 @@ def calculate_slope_intercept(df: pl.DataFrame) -> pl.LazyFrame:
     .select("datetime", "system_id", "slope", "intercept") \
     .filter(pl.col("slope") > 0.9) \
     .filter(pl.col("slope") < 1.1) \
-    .sort("datetime") \
-    .lazy()
+    .sort("datetime")
 
 
 def apply_slope_intercept(df: pl.DataFrame,
