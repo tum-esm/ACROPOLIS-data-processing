@@ -30,17 +30,22 @@ poetry install --with dev  # Install dependencies
 
 ## Running the scripts
 
-- Process downloaded ThingsBoard data:
+(1) Process downloaded ThingsBoard data
 
 ```bash
 python pipeline/acropolis_postprocessing.py
 ```
 
-- Despike postprocessed network data
--
+(2) Despike output from `acropolis_postprocessing.py`
 
 ```bash
 python pipeline/timeseries_despiking.py
+```
+
+(3) Concat output from `timeseries_despiking.py` to site specific time series and export to csv format + HEADER for ICOS Cities portal
+
+```bash
+python pipeline/L1_icos_cities_portal.py
 ```
 
 ---
