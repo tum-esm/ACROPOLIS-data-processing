@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "acropolis-visualisation"
+name = "acropolis-data-processing"
 version = "0.1.0"
-description = "A package to visualise ACROPLIS network data"
+description = "A package to process and visualize ACROPLIS data"
 authors = ["patrickaigner <patrick.aigner@tum.de>"]
 readme = "README.md"
-packages = [{include = "acropolis_visualisation"}]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
@@ -29,6 +29,8 @@ urllib3 = "^2.3.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.24.0"
+types-requests = "^2.32.0.20241016"
+mypy = "^1.14.1"
 
 [build-system]
 requires = ["poetry-core"]
