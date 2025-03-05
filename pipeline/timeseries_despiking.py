@@ -13,8 +13,7 @@ from utils.os_functions import ensure_data_dir
 
 from utils.paths import DESPIKED_DATA_DIRECTORY, POSTPROCESSED_DATA_DIRECTORY, LOG_DIRECTORY
 
-assert (os.path.exists(POSTPROCESSED_DATA_DIRECTORY),
-        "Postprocessed data directory does not exist")
+assert (os.path.exists(POSTPROCESSED_DATA_DIRECTORY))
 ensure_data_dir(DESPIKED_DATA_DIRECTORY)
 ensure_data_dir(LOG_DIRECTORY)
 

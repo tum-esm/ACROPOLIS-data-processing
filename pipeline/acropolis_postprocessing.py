@@ -17,8 +17,7 @@ from utils.write_parquet import write_split_years
 
 from utils.paths import POSTPROCESSED_DATA_DIRECTORY, THINGSBOARD_DATA_DIRECTORY, LOG_DIRECTORY
 
-assert (os.path.exists(THINGSBOARD_DATA_DIRECTORY),
-        "Thingsboard data directory does not exist")
+assert (os.path.exists(THINGSBOARD_DATA_DIRECTORY))
 ensure_data_dir(POSTPROCESSED_DATA_DIRECTORY)
 ensure_data_dir(LOG_DIRECTORY)
 
