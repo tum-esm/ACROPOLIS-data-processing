@@ -34,7 +34,7 @@ for site in config["icos_cities_portal"]["site_names"]:
     df = df.pipe(convert_to_1min_icos_cp_format)
 
     # Write to CSV with ICOS CP Header
-    df_to_L1_1min_icos_csv(df=df, sites_meta=sites_meta, site=site, data_level=1, path=ICOS_CITIES_LEVEL_1)
+    df_to_L1_1min_icos_csv(df=df, sites_meta=sites_meta, site=site)
 
     # Clear memory
     del df

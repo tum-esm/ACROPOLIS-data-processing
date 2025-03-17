@@ -1,14 +1,15 @@
 import os
 import csv
 import polars as pl
+from .paths import ICOS_CITIES_LEVEL_1, ICOS_CITIES_LEVEL_2
 
 
-def df_to_L1_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str, data_level: int, path: str) -> None:
+def df_to_L1_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) -> None:
     
     """Write a polars dataframe to a csv file in ICOS Cities Portal format."""
     header_lines = 45
-    file_name = f"{site}_munich_acropolis_L{data_level}_1min.csv"
-    file_path = os.path.join(path, file_name)
+    file_name = f"{site}_munich_acropolis_L1_1min.csv"
+    file_path = os.path.join(ICOS_CITIES_LEVEL_1, file_name)
     file_lines = len(df) + header_lines
     site_short_name = site[:4]
     site_long_name = sites_meta.filter(
@@ -42,7 +43,7 @@ def df_to_L1_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str, 
         writer.writerow([f'# TOTAL LINES: {file_lines}'])
         writer.writerow([f'# HEADER LINES: {header_lines}'])
         writer.writerow(['# PROJECT: ICOS CITIES'])
-        writer.writerow([f'# DATA VERSION: L{data_level}'])
+        writer.writerow(['# DATA VERSION: L1'])
         writer.writerow([f'# STATION CODE: {site_short_name}'])
         writer.writerow([f'# STATION NAME: {site_long_name} ({site_short_name})'])
         writer.writerow([
@@ -111,10 +112,10 @@ def df_to_L1_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str, 
         for row in df.iter_rows():
             writer.writerow([''.join(item) for item in row])
 
-def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str, data_level: int, path: str) -> None:
+def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) -> None:
     header_lines = 46
-    file_name = f"{site}_munich_acropolis_L{data_level}_1min.csv"
-    file_path = os.path.join(path, file_name)
+    file_name = f"{site}_munich_acropolis_L2_1min.csv"
+    file_path = os.path.join(ICOS_CITIES_LEVEL_2, file_name)
     file_lines = len(df) + header_lines
     site_short_name = site[:4]
     site_long_name = sites_meta.filter(
@@ -140,7 +141,7 @@ def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str, 
         writer.writerow([f'# TOTAL LINES: {file_lines}'])
         writer.writerow([f'# HEADER LINES: {header_lines}'])
         writer.writerow(['# PROJECT: ICOS CITIES'])
-        writer.writerow([f'# DATA VERSION: L{data_level}'])
+        writer.writerow(['# DATA VERSION: L2'])
         writer.writerow([f'# STATION CODE: {site_short_name}'])
         writer.writerow([f'# STATION NAME: {site_long_name} ({site_short_name})'])
         writer.writerow(['# OBSERVATION CATEGORY: Air sampling observation at a stationary platform'])
@@ -189,11 +190,11 @@ def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str, 
         for row in df.iter_rows():
             writer.writerow([''.join(item) for item in row])
             
-def df_to_L2_1h_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str, data_level: int, path: str) -> None:
+def df_to_L2_1h_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) -> None:
     
     header_lines = 46
-    file_name = f"{site}_munich_acropolis_L{data_level}_1h.csv"
-    file_path = os.path.join(path, file_name)
+    file_name = f"{site}_munich_acropolis_L2_1h.csv"
+    file_path = os.path.join(ICOS_CITIES_LEVEL_2, file_name)
     file_lines = len(df) + header_lines
     site_short_name = site[:4]
     site_long_name = sites_meta.filter(
@@ -219,7 +220,7 @@ def df_to_L2_1h_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str, da
         writer.writerow([f'# TOTAL LINES: {file_lines}'])
         writer.writerow([f'# HEADER LINES: {header_lines}'])
         writer.writerow(['# PROJECT: ICOS CITIES'])
-        writer.writerow([f'# DATA VERSION: L{data_level}'])
+        writer.writerow(['# DATA VERSION: L2'])
         writer.writerow([f'# STATION CODE: {site_short_name}'])
         writer.writerow([f'# STATION NAME: {site_long_name} ({site_short_name})'])
         writer.writerow(['# OBSERVATION CATEGORY: Air sampling observation at a stationary platform'])
