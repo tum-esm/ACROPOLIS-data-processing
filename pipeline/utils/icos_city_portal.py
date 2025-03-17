@@ -1,17 +1,16 @@
 import requests
 import os
-import json
 from datetime import datetime, timezone
 
 from .os_functions import zip_file, hash_file
 
 
 def upload_file_to_icos_cp(
-    config: json,
+    config: dict,
     root_directory: str,
     file_name: str,
     site_id: str,
-    sampling_height: str,
+    sampling_height: float,
     data_level: int,
 ) -> bool:
     """Two step upload process to ICOS Carbon Portal. Register metadata package and upload file.
@@ -55,7 +54,7 @@ def upload_file_to_icos_cp(
             'samplingHeight': sampling_height,
             'production': {
                 "creator": config["icos_cities_portal"]["creator_s"],
-                "contributors": config["icos_cities_portal"]["contributors_s"],
+                "contributors": config["icos_cities_portal"]["contributor_s"],
                 "comment": config["icos_cities_portal"]["comment"],
                 "hostOrganization": config["icos_cities_portal"]["host_org_s"],
                 "creationDate": creation_date
@@ -73,15 +72,15 @@ def upload_file_to_icos_cp(
         'partialUpload': False,
     }
 
-    # Perform the POST request and save cookies to a file
+    #Perform the POST request and save cookies to a file
     with requests.Session() as session:
         # authenticate
         session.post("https://cpauth.icos-cp.eu/password/login",
                      data={
                          "mail":
-                         config["icos_cities_portal"]["icos_user_email"],
+                         config["icos_cities_portal"]["portal_user"],
                          "password":
-                         config["icos_cities_portal"]["icos_password"]
+                         config["icos_cities_portal"]["portal_password"]
                      })
 
         r = session.post(
