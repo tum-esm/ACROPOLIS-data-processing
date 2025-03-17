@@ -29,9 +29,6 @@ for path in L1_filenames:
     root_directory = os.path.dirname(path)
     fname = os.path.basename(path)
     site_id = os.path.basename(path)[:4]
-    
-    if site_id == "BALR":
-        continue
 
     if site_id == 'BLUT':
         sampling_height = float(os.path.basename(path)[5:7] + '.0')
