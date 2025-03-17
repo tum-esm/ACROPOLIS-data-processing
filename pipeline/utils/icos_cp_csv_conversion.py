@@ -5,8 +5,6 @@ from .paths import ICOS_CITIES_LEVEL_1, ICOS_CITIES_LEVEL_2
 
 
 def df_to_L1_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) -> None:
-    
-    """Write a polars dataframe to a csv file in ICOS Cities Portal format."""
     header_lines = 45
     file_name = f"{site}_munich_acropolis_L1_1min.csv"
     file_path = os.path.join(ICOS_CITIES_LEVEL_1, file_name)
@@ -191,8 +189,7 @@ def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) 
             writer.writerow([''.join(item) for item in row])
             
 def df_to_L2_1h_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) -> None:
-    
-    header_lines = 46
+    header_lines = 45
     file_name = f"{site}_munich_acropolis_L2_1h.csv"
     file_path = os.path.join(ICOS_CITIES_LEVEL_2, file_name)
     file_lines = len(df) + header_lines
