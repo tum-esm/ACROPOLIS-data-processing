@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 
 from .os_functions import zip_file, hash_file
 
-
 def upload_file_to_icos_cp(
     config: dict,
     root_directory: str,
