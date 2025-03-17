@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 
 from utils.config_files import load_json_config
-from utils.icos_city_portal import upload_file_to_icos_cp
+from utils.icos_cp_http_upload import upload_file_to_icos_cp
 
 from utils.paths import CONFIG_DIRECTORY, ICOS_CITIES_LEVEL_1
 
