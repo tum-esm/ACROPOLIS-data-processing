@@ -34,7 +34,7 @@ logging.basicConfig(
     ])
 
 logging.info("=========================================")
-logging.info("Starting despiking ACROPOLIS postprocessed data")
+logging.info("Starting despiking of ACROPOLIS postprocessed data")
 
 # Record start time
 start_time = time.time()

@@ -72,39 +72,39 @@ def upload_file_to_icos_cp(
     }
 
     #Perform the POST request and save cookies to a file
-    with requests.Session() as session:
-        # authenticate
-        session.post("https://cpauth.icos-cp.eu/password/login",
-                     data={
-                         "mail":
-                         config["icos_cities_portal"]["portal_user"],
-                         "password":
-                         config["icos_cities_portal"]["portal_password"]
-                     })
+    # with requests.Session() as session:
+    #     # authenticate
+    #     session.post("https://cpauth.icos-cp.eu/password/login",
+    #                  data={
+    #                      "mail":
+    #                      config["icos_cities_portal"]["portal_user"],
+    #                      "password":
+    #                      config["icos_cities_portal"]["portal_password"]
+    #                  })
 
-        r = session.post(
-            url='https://citymeta.icos-cp.eu/upload', json=payload
-        )  # Automatically sets the Content-Type to application/json)
+    #     r = session.post(
+    #         url='https://citymeta.icos-cp.eu/upload', json=payload
+    #     )  # Automatically sets the Content-Type to application/json)
 
-        if r.status_code == 200:
-            print(f"Register metadata package for site {site_id}: Successful")
-            print(f'Response URL : {r.text}')
-            print('Start uploading file')
+    #     if r.status_code == 200:
+    #         print(f"Register metadata package for site {site_id}: Successful")
+    #         print(f'Response URL : {r.text}')
+    #         print('Start uploading file')
 
-            filepath = os.path.join(root_directory, file_name + '.zip')
-            with open(filepath, "rb") as file:
-                rd = session.put(r.text, data=file)
-            if rd.status_code == 200:
-                print(f"File upload successful")
-            else:
-                print(f"File upload failed with status code {rd.status_code}")
-                print(f"Response: {rd.text}")
-                return False
-        else:
-            print(
-                f"Register metadata package: Failed with status code {r.status_code}"
-            )
-            print(f"Response: {r.text}")
-            return False
+    #         filepath = os.path.join(root_directory, file_name + '.zip')
+    #         with open(filepath, "rb") as file:
+    #             rd = session.put(r.text, data=file)
+    #         if rd.status_code == 200:
+    #             print(f"File upload successful")
+    #         else:
+    #             print(f"File upload failed with status code {rd.status_code}")
+    #             print(f"Response: {rd.text}")
+    #             return False
+    #     else:
+    #         print(
+    #             f"Register metadata package: Failed with status code {r.status_code}"
+    #         )
+    #         print(f"Response: {r.text}")
+    #         return False
 
-    return True
+    # return True

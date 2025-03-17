@@ -38,7 +38,7 @@ logging.basicConfig(
     ])
 
 logging.info("=========================================")
-logging.info("Starting processing ACROPOLIS raw data")
+logging.info("Starting processing of ACROPOLIS raw data")
 
 # Record start time
 start_time = time.time()
