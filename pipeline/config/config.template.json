@@ -21,7 +21,18 @@
         ],
         "input_years": [2024,2025],
         "portal_user": "user@mail.de",
-        "portal_password": "..."
-
+        "portal_password": "...",
+        "l1_object_specification": "...",
+        "l2_object_specification": "...",
+        "creator_s": "...",
+        "contributor_s": [
+            "...",
+            "..."
+        ],
+        "host_org_s": "...",
+        "submitter_id": "...",
+        "station_base_url": "...",
+        "keywords": ["...", "..."],
+        "comment": "...\n"
     }
 }
