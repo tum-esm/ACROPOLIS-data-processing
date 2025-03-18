@@ -54,8 +54,7 @@ def plot_column(df: pl.DataFrame,
 
     # Format the x-axis for datetime
     plt.xlabel("Datetime")
-    plt.ylabel("Difference")
-    plt.title(f"Difference Between {col1} Over Time")
+    plt.ylabel(col1)
     plt.legend()
     plt.grid(True)
 
