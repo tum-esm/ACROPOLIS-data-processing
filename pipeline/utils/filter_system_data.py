@@ -48,7 +48,7 @@ def extract_measurement_data(df_raw: pl.LazyFrame) -> pl.LazyFrame:
     .filter(pl.col('gmp343_filtered') > 0.0) \
     .filter(pl.col('gmp343_temperature') > 0.0) \
     .filter(pl.col('sht45_humidity') > 0.0) \
-    .filter(pl.col('bme280_pressure') > 0.0)
+    .filter(pl.col('bme280_pressure') > 850.0)
 
 
 def extract_calibration_data(df_raw: pl.LazyFrame) -> pl.DataFrame:
