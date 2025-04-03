@@ -59,14 +59,13 @@ for id in config["despiking"]["system_ids"]:
         "enclosure_bme280_pressure", "wxt532_speed_avg", "wxt532_direction_avg"
     ]
 
-    #CO2 column is cast to f32 to match the hampel filter output, else comparison fails
+    # Select columns of interest from postprocessed df
     df = df_raw.select(selected_columns) \
-        .cast({"gmp343_corrected": pl.Float32}) \
         .filter(pl.col("gmp343_corrected") > 0) \
         .collect()
 
     # Convert CO2 column to pandas series
-    data = df.get_column("gmp343_corrected").to_pandas()
+    data = df.get_column("gmp343_corrected").to_numpy()
 
     # Apply the Hampel filter
     result = hampel(data,
@@ -80,9 +79,15 @@ for id in config["despiking"]["system_ids"]:
 
     # Create column "Flag" = 'H' indicating local contamination
     df = df.with_columns(pl.Series("co2_hampel_filtered", result.filtered_data)) \
+        .cast({"co2_hampel_filtered": pl.Float64}) \
+        .with_columns(
+        [
+            pl.col("gmp343_corrected").round(2),
+            pl.col("co2_hampel_filtered").round(2),
+        ]
+        ) \
         .with_columns(pl.when(pl.col("gmp343_corrected").ne(pl.col("co2_hampel_filtered"))).then(pl.lit('H')).otherwise(pl.lit('U')).alias("Flag")) \
-        .drop("co2_hampel_filtered") \
-        .cast({"gmp343_corrected": pl.Float64})
+        .drop("co2_hampel_filtered") 
 
     # Save data
     logging.info(f"Writing 1min despiked data to parquet. Length: {len(df)}")

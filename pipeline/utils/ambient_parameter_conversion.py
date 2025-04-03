@@ -33,6 +33,7 @@ def absolute_temperature(t: float) -> float:
 def saturation_vapor_pressure(t: float) -> float:
     """
     Compute saturation vapor pressure of water (in pascal) at given absolute temperature.
+    *Wagner, W. & Pruss, A. (2002). The IAPWS Formulation 1995 for the Thermodynamic Properties of Ordinary Water Substance. *Journal of Physical and Chemical Reference Data*, 31(2), 387–535.**
 
     t: float = Temperature in K
 
@@ -79,16 +80,16 @@ def rh_to_ah(rh: float, t: float) -> float:
     return c * pw / t * rh / 100
 
 
-def rh_to_molar_mixing(rh: float, t: float, p: float) -> float:
+def rh_to_mole_fraction(rh: float, t: float, p: float) -> float:
     """
-    Convert the give relative humidity (in 100%) to a molar mixing ratio (kg/kg).
+    Convert the give relative humidity (in %) to a molar mixing ratio (kg/kg).
 
     rh: float = The relative humidity in %
     t: float = The absolute temperature in K
     p: float = Pressure in Pa
 
     Returns:
-    float = Water vapor molar mixing ratio in kg/kg
+    float = Water vapor mole fraction
     """
     return saturation_vapor_pressure(t) * rh / 100 / p
 
@@ -105,5 +106,5 @@ def calculate_co2dry(co2wet: float, temperature: float, rh: float, pressure: flo
     Returns:
     float: CO2 dry in ppm
     """
-    xh2o = rh_to_molar_mixing(rh=rh, t=absolute_temperature(temperature), p=pressure)
+    xh2o = rh_to_mole_fraction(rh=rh, t=absolute_temperature(temperature), p=pressure)
     return co2wet / (1 - xh2o)

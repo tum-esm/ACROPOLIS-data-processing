@@ -56,7 +56,7 @@ def extract_calibration_data(df_raw: pl.LazyFrame) -> pl.DataFrame:
     return df_raw.select("datetime","system_id", '^cal_.*$') \
     .collect() \
     .filter(pl.col("cal_bottle_id") > 0.0) \
-    .filter(pl.col("cal_bottle_id") < df_gas["cal_bottle_id"].max()) \
+    .filter(pl.col("cal_bottle_id") <= df_gas["cal_bottle_id"].max()) \
     .filter(pl.col("cal_gmp343_filtered") > 0.0) \
     .filter(pl.col("cal_gmp343_temperature") > 0.0) \
     .filter(pl.col("cal_sht45_humidity") >= 0.0) \
