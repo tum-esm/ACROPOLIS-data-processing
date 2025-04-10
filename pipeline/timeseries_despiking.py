@@ -55,7 +55,7 @@ for id in config["despiking"]["system_ids"]:
     # Extract data
     selected_columns = [
         "datetime", "system_id", "system_name", "gmp343_corrected",
-        "gmp343_temperature", "h2o_v%", "bme280_pressure",
+        "gmp343_temperature", "sht45_humidity", "h2o_v%", "bme280_pressure",
         "enclosure_bme280_pressure", "wxt532_speed_avg", "wxt532_direction_avg"
     ]
 
@@ -64,7 +64,7 @@ for id in config["despiking"]["system_ids"]:
         .filter(pl.col("gmp343_corrected") > 0) \
         .collect()
 
-    # Convert CO2 column to pandas series
+    # Convert CO2 column to numpy series
     data = df.get_column("gmp343_corrected").to_numpy()
 
     # Apply the Hampel filter
