@@ -82,7 +82,7 @@ def rh_to_ah(rh: float, t: float) -> float:
 
 def rh_to_mole_fraction(rh: float, t: float, p: float) -> float:
     """
-    Convert the give relative humidity (in %) to a molar mixing ratio (kg/kg).
+    Convert the give relative humidity (in %) to a mole fraction.
 
     rh: float = The relative humidity in %
     t: float = The absolute temperature in K
