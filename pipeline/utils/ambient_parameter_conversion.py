@@ -33,7 +33,7 @@ def absolute_temperature(t: float) -> float:
 def saturation_vapor_pressure(t: float) -> float:
     """
     Compute saturation vapor pressure of water (in pascal) at given absolute temperature.
-    *Wagner, W. & Pruss, A. (2002). The IAPWS Formulation 1995 for the Thermodynamic Properties of Ordinary Water Substance. *Journal of Physical and Chemical Reference Data*, 31(2), 387–535.**
+    From Page 398/399 of Wagner, W. & Pruss, A. (2002). The IAPWS Formulation 1995 for the Thermodynamic Properties of Ordinary Water Substance. *Journal of Physical and Chemical Reference Data*, 31(2), 387–535.
 
     t: float = Temperature in K
 
