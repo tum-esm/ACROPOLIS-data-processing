@@ -54,7 +54,7 @@ for id in config["despiking"]["system_ids"]:
 
     # Extract data
     selected_columns = [
-        "datetime", "system_id", "system_name", "gmp343_corrected",
+        "datetime", "system_id", "system_name", "gmp343_corrected", "gmp343_edge_corrected",
         "gmp343_temperature", "sht45_humidity", "h2o_v%", "bme280_pressure",
         "enclosure_bme280_pressure", "wxt532_speed_avg", "wxt532_direction_avg"
     ]
