@@ -65,6 +65,65 @@ def plot_column(df: pl.DataFrame,
 
     plt.show()
 
+def plot_columns(df: pl.DataFrame,
+                 datetime_col: str,
+                 columns: list[str],
+                 sample_size: int = 10000,
+                 filter_value: int = 1000) -> None:
+    """
+    Plots multiple columns over a datetime index.
+    
+    Parameters:
+    - df (pl.DataFrame): The Polars DataFrame containing the data.
+    - datetime_col (str): The column name for datetime values.
+    - columns (list[str]): A list of column names to plot.
+    - sample_size (int): Number of points to sample for plotting (default=10,000).
+    - filter_value (int): Maximum absolute value to filter out (default=1,000).
+    """
+    # Ensure all required columns exist
+    for col in [datetime_col] + columns:
+        if col not in df.columns:
+            raise ValueError(f"Column '{col}' not found in DataFrame")
+    
+    # Convert datetime column to proper format if necessary
+    if not isinstance(df[datetime_col].dtype, pl.Datetime):
+        df = df.with_columns(
+            pl.col(datetime_col).cast(pl.Datetime).alias(datetime_col))
+    
+    # Apply filter to all specified columns
+    condition = pl.lit(True)
+    for col in columns:
+        condition = condition & (pl.col(col) < filter_value) & (pl.col(col) > -filter_value)
+    df = df.filter(condition)
+    
+    # Downsample the DataFrame if needed
+    num_rows = df.height
+    if num_rows > sample_size:
+        indices = np.linspace(0, num_rows - 1, sample_size, dtype=int)
+        df_sampled = df[indices]
+    else:
+        df_sampled = df
+
+    # Convert datetime values to a NumPy array for Matplotlib compatibility
+    x_values = df_sampled[datetime_col].to_numpy()
+
+    # Plot each column on the same figure
+    plt.figure(figsize=(12, 5))
+    for col in columns:
+        y_values = df_sampled[col].to_numpy()
+        plt.plot(x_values, y_values, label=col, alpha=0.7, linewidth=1)
+    
+    plt.xlabel("Datetime")
+    plt.ylabel("Value")
+    plt.legend()
+    plt.grid(True)
+    
+    # Format date ticks on the x-axis
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d %H:%M"))
+    plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())
+    plt.xticks(rotation=45)
+    
+    plt.show()
 
 def plot_column_difference(df: pl.DataFrame,
                            datetime_col: str,
