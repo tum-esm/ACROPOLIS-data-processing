@@ -56,7 +56,8 @@ for id in config["despiking"]["system_ids"]:
     selected_columns = [
         "datetime", "system_id", "system_name", "gmp343_corrected", "gmp343_edge_corrected",
         "gmp343_temperature", "sht45_humidity", "h2o_v%", "bme280_pressure",
-        "enclosure_bme280_pressure", "wxt532_speed_avg", "wxt532_direction_avg"
+        "enclosure_bme280_pressure", "wxt532_speed_avg", "wxt532_direction_avg", "gmp343_dry",  
+        "slope_interpolated", "intercept_interpolated"
     ]
 
     # Select columns of interest from postprocessed df
