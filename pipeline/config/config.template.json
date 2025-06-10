@@ -34,5 +34,9 @@
         "station_base_url": "...",
         "keywords": ["...", "..."],
         "comment": "...\n"
+    },
+    "site_classification": {
+        "urban": ["TUMR", "SENR", "RDIR", "SCHR", "SWMR", "GROR", "BLUT_48", "BLUT_85", "NPLR", "BOGR", "HARR", "BALR", "PASR"],
+        "rural": ["MAIR", "DLRR", "FINR", "FELR", "TAUR"]
     }
 }
