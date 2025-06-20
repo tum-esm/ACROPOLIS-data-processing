@@ -20,6 +20,15 @@ deployment_times = {
             },
         ],
     },
+    "TUMRv2": {
+        "sensors": [
+            {
+                "id": 3,
+                "start_time": "2025-02-18T00:00:00+0000",
+                "end_time": current_date
+            }
+        ],
+    },
     "FELR": {
         "sensors": [
             {
@@ -104,7 +113,7 @@ deployment_times = {
             {
                 "id": 3,
                 "start_time": "2024-02-22T00:00:00+0000",
-                "end_time": "2023-04-03T00:00:00+0000"
+                "end_time": "2024-04-03T00:00:00+0000"
             },
             {
                 "id": 11,
