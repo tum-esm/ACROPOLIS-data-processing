@@ -25,6 +25,7 @@ altair = "^5.5.0"
 polars = "^1.22.0"
 urllib3 = "^2.3.0"
 seaborn = "^0.13.2"
+windrose = "^1.9.2"
 
 
 [tool.poetry.group.dev.dependencies]
