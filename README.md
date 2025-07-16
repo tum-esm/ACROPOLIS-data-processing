@@ -10,6 +10,16 @@ Input data for the processing pipeline is downloaded from the [ThingsBoard](http
 
 This repository contains a Python based processing pipeline realized with performant [Polars Dataframes](https://pola.rs) and a collection of Jupyter notebooks to visualise the ACROPOLIS network data. Python scripts are statically typed and continuously checked using [mypy](https://github.com/python/mypy) via GitHub Actions. 
 
+#### Key Pipeline Features
+
+- ✅ Customizable data processing via JSON configuration
+- ✅ Efficient storage using Parquet files for fast querying
+- ✅ Performant processing using Polars DataFrames
+- ✅ Dilution and calibration correction of $CO_2$ data
+- ✅ Time series outlier detection via Hampel filter
+- ✅ Easy CSV reformatting and header generation to ICOS format
+- ✅ Automated ICOS Cities data portal upload
+
 <br/>
 
 ## Structure
@@ -19,22 +29,6 @@ This repository contains a Python based processing pipeline realized with perfor
 - `notebooks/`: Contains Jupyter notebooks for data visualization.
 - `scripts/`: Contains utility scripts for running type checks and other tasks.
 
-
-### Pipeline
-- `01_acropolis_postprocessing.py`: Processes downloaded ThingsBoard data.
-- `02_timeseries_despiking.py`: Despikes output from the postprocessing script.
-- `03_L1_write_csv_icos_cp.py`: Concatenates system specific output from the despiking script to site-specific time series and exports to CSV format with a header for the ICOS Cities portal.
-- `04_L1_upload_csv_icos_cp.py`: Uploads the CSV files to the ICOS Cities portal.
-
-#### Key Features
-
-- ✅ Customizable data processing via JSON configuration
-- ✅ Efficient storage using Parquet files for fast querying
-- ✅ Performant processing using Polars DataFrames
-- ✅ Dilution and calibration correction of $CO_2$ data
-- ✅ Time series outlier detection via Hampel filter
-- ✅ Easy CSV reformatting and header generation to ICOS format
-- ✅ Automated ICOS Cities data portal upload
 
 <br/>
 
@@ -55,21 +49,7 @@ source .venv/bin/activate  # Activate it
 poetry install --with dev  # Install dependencies
 ```
 
-
-## Initial Setup
-
-- Navigate to `pipeline/config/`
-- Copy `config.template.json` → Rename it to `config.json`
-- Fill `config.json` with relevant info
-
-## Configuration
-
-- `config.json` contains the configuration for the processing pipeline, including ICOS Cities data portal user credentials
-- `sites_deployment_times.py` manages sensor deployment times
-- `sites.csv` contains site metadata for the ICOS Cities portal 
-
-
-## Example: Run the full pipeline
+## Example: Run the pipeline
 
 ```bash
 python pipeline/01_acropolis_postprocessing.py
@@ -77,6 +57,7 @@ python pipeline/02_timeseries_despiking.py
 python pipeline/03_L1_write_csv_icos_cp.py
 python pipeline/04_L1_upload_csv_icos_cp.py
 ```
+
 
 ## Running Type Checks (MyPy)
 
