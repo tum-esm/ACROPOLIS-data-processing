@@ -4,7 +4,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/release/python-3120/)
 [![mypy](https://github.com/tum-esm/ACROPOLIS-data-processing/actions/workflows/pipeline.yml/badge.svg)](https://github.com/tum-esm/ACROPOLIS-data-processing/actions)
 
-The ACROPOLIS (**A**utonomous and **C**alibrated **R**oof-top **O**bservatory for Metro**POLI**ton **S**ensing) network spans 20 roof-top CO2 sensor systems located in and around Munich and is part of the EU Horizon Project [ICOS Cities](https://www.icos-cp.eu/projects/icos-cities). The network is run by the open source software [ACROPOLIS-edge](https://github.com/tum-esm/ACROPOLIS-edge).
+The ACROPOLIS (**A**utonomous and **C**alibrated **R**oof-top **O**bservatory for Metro**POLI**ton **S**ensing) network spans 20 roof-top CO2 sensor systems located in and around Munich. The network is run by the open source software [ACROPOLIS-edge](https://github.com/tum-esm/ACROPOLIS-edge). The project is part of [**ICOS Cities**](https://www.icos-cp.eu/projects/icos-cities), funded by the European Union's Horizon 2020 Research and Innovation Programme under grant agreement No. **101037319**.
 
 Input data for the processing pipeline is downloaded from the [ThingsBoard](https://thingsboard.io) Open-Source IoT platform using the [ThingsBoard-Downloader](https://github.com/tum-esm/ThingsBoard-Downloader).
 
