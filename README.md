@@ -49,7 +49,7 @@ source .venv/bin/activate  # Activate it
 poetry install --with dev  # Install dependencies
 ```
 
-## Example: Run the pipeline
+## Run the pipeline
 
 ```bash
 python pipeline/01_acropolis_postprocessing.py
@@ -59,7 +59,7 @@ python pipeline/04_L1_upload_csv_icos_cp.py
 ```
 
 
-## Running Type Checks (MyPy)
+## Run Type Checks (MyPy)
 
 To ensure type safety and catch potential errors, run:
 
