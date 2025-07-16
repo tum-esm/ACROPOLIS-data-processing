@@ -51,6 +51,8 @@ poetry install --with dev  # Install dependencies
 
 ## Run the pipeline
 
+Instructions on how to set up the pipeline can be found in the pipeline [README](pipeline/README.md).
+
 ```bash
 python pipeline/01_acropolis_postprocessing.py
 python pipeline/02_timeseries_despiking.py
