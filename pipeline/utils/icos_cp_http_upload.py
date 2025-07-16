@@ -36,6 +36,7 @@ def upload_file_to_icos_cp(
     datetime_format = '%Y-%m-%dT%H:%M:%S.000Z'
     creation_date = datetime.now(timezone.utc).strftime(
         datetime_format)  # date of the data creation
+    data_object_specification = ''
     if data_level == 2:
         data_object_specification = config["icos_cities_portal"][
             "l2_object_specification"]
