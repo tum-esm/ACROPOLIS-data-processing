@@ -22,18 +22,18 @@
         "input_years": [2024,2025],
         "portal_user": "user@mail.de",
         "portal_password": "...",
-        "l1_object_specification": "...",
-        "l2_object_specification": "...",
-        "creator_s": "...",
-        "contributor_s": [
-            "...",
-            "..."
-        ],
-        "host_org_s": "...",
         "submitter_id": "...",
-        "station_base_url": "...",
-        "keywords": ["...", "..."],
-        "comment": "...\n"
+        "l1_object_specification": "https://citymeta.icos-cp.eu/resources/cpmeta/atmObsNrt",
+        "l2_object_specification": "https://citymeta.icos-cp.eu/resources/cpmeta/atmObsProduct",
+        "creator_s": "https://citymeta.icos-cp.eu/resources/people/Patrick_Aigner",
+        "contributor_s": [
+            "https://citymeta.icos-cp.eu/resources/people/Jia_Chen",
+            "https://citymeta.icos-cp.eu/resources/people/KlausKurzinger"
+        ],
+        "host_org_s": "https://citymeta.icos-cp.eu/resources/organizations/TUM",
+        "station_base_url": "https://citymeta.icos-cp.eu/resources/stations/Munich_",
+        "keywords": ["CO2", "Mid-Cost, ACROPOLIS, Munich, rooftop", "Vaisala-GMP343"],
+        "comment": "Related work:\n Aigner P., Kühbacher D., Wenzel A., Schmitt A., Böhm F., Makowski M., Kürzinger K., Laurent O., Rubli P., Grange S., Emmenegger L., and Chen J.: Advancing Urban Greenhouse Gas Monitoring: Development and Evaluation of a High-Density CO2 Sensor Network in Munich. ICOS Science Conference 2024, Versailles, France, 10.-12. Sept, https://www.icos-cp.eu/news-and-events/science-conference/icos2024sc/all-abstracts\n"
     },
     "site_classification": {
         "urban": ["TUMR", "SENR", "RDIR", "SCHR", "SWMR", "BLUT_48", "BLUT_85"],
