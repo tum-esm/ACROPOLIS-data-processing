@@ -59,6 +59,9 @@ for id in config["despiking"]["system_ids"]:
         "enclosure_bme280_pressure", "wxt532_speed_avg", "wxt532_direction_avg", "gmp343_dry", "slope", "intercept", 
         "gmp343_edge_dry", "cal_gmp343_slope", "cal_gmp343_intercept"
     ]
+    
+    if config["despiking"]["add_1P_correction"]:
+        selected_columns += ["gmp343_corrected_one_point_low", "gmp343_corrected_one_point_high", "offset_low", "offset_high", "bottle_median_high", "bottle_median_low"]
 
     # Select columns of interest from postprocessed df
     df = df_raw.select(selected_columns) \

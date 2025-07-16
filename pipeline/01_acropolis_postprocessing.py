@@ -11,7 +11,7 @@ from utils.import_data import import_acropolis_system_data
 from utils.filter_system_data import extract_wind_data, extraxt_auxilliary_data, extract_edge_calibration_data, extract_measurement_data, extract_calibration_data
 from utils.dilution_correction import wet_to_dry_mole_fraction
 from utils.os_functions import ensure_data_dir
-from utils.calibration_processing import calculate_slope_intercept, apply_slope_intercept
+from utils.calibration_processing import calculate_slope_intercept, apply_slope_intercept, calculate_offset_low_high, apply_offset_low_high
 from utils.dataframe_operations import join_slice
 from utils.write_parquet import write_split_years
 
@@ -70,6 +70,14 @@ for id in config["postprocessing"]["system_ids"]:
 
     # Calculate slope and intercept
     df_slope_intercept = calculate_slope_intercept(df_calibration)
+    
+    # Evaluate if one-point correction should be applied
+    if config["postprocessing"]["add_1P_correction"]:
+        df_offset_low_high = calculate_offset_low_high(df_calibration)
+    else:
+        df_offset_low_high = pl.DataFrame()
+    run_one_point = config["postprocessing"]["add_1P_correction"]
+
 
     del df_calibration
     gc.collect()  # Explicitly run garbage collection
@@ -82,6 +90,7 @@ for id in config["postprocessing"]["system_ids"]:
     # Process measurement data
     df = df.pipe(wet_to_dry_mole_fraction) \
         .pipe(apply_slope_intercept, df_slope_intercept) \
+        .pipe(apply_offset_low_high, df_offset_low_high, run_one_point) \
         .pipe(join_slice, df_wind, "2m") \
         .pipe(join_slice, df_aux, "2m") \
         .pipe(join_slice, df_edge_cal, "1d") \
