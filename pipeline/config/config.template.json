@@ -36,7 +36,8 @@
         "comment": "...\n"
     },
     "site_classification": {
-        "urban": ["TUMR", "SENR", "RDIR", "SCHR", "SWMR", "GROR", "BLUT_48", "BLUT_85", "NPLR", "BOGR", "HARR", "BALR", "PASR"],
-        "rural": ["MAIR", "DLRR", "FINR", "FELR", "TAUR"]
+        "urban": ["TUMR", "SENR", "RDIR", "SCHR", "SWMR", "BLUT_48", "BLUT_85"],
+        "suburban": ["GROR", "NPLR", "BOGR", "PASR", "BALR", "HARR"],
+        "rural": ["MAIR", "DLRR", "FINR", "TAUR",  "FELR"]
     }
 }
