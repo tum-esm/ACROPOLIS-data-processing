@@ -9,17 +9,17 @@ def df_to_L1_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) 
     file_name = f"{site}_munich_acropolis_L1_1min.csv"
     file_path = os.path.join(ICOS_CITIES_LEVEL_1, file_name)
     file_lines = len(df) + header_lines
-    site_short_name = site[:4]
+    site_short_name = site
     site_long_name = sites_meta.filter(
-        pl.col("site") == site[:4]).select("site_name").item()
+        pl.col("site") == site).select("site_name").item()
     latitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("latitude").item()
+        pl.col("site") == site).select("latitude").item()
     longitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("longitude").item()
+        pl.col("site") == site).select("longitude").item()
     altitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("elevation").item()
+        pl.col("site") == site).select("elevation").item()
     sampling_height = sites_meta.filter(
-        pl.col("site") == site[:4]).select("height_of_building").item()
+        pl.col("site") == site).select("height_of_building").item()
     start_date = df.select("#Datetime").row(0)[0]
     stop_date = df.select("#Datetime").row(-1)[0]
     
@@ -61,12 +61,7 @@ def df_to_L1_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) 
         writer.writerow([f'# LATITUDE: {latitude}'])
         writer.writerow([f'# LONGITUDE: {longitude}'])
         writer.writerow([f'# ALTITUDE: {altitude} m asl'])
-
-        if site[:4] == "BLUT":
-            writer.writerow([f'# SAMPLING HEIGHTS: {site[-2:]} m agl'])
-        else:
-            writer.writerow([f'# SAMPLING HEIGHTS: {sampling_height} m agl'])
-
+        writer.writerow([f'# SAMPLING HEIGHTS: {sampling_height} m agl'])
         writer.writerow(['# PARAMETER: co2'])
         writer.writerow([f'# COVERING PERIOD: {start_date} - {stop_date}'])
         writer.writerow(['# TIME INTERVAL: 1 minute'])
@@ -115,17 +110,17 @@ def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) 
     file_name = f"{site}_munich_acropolis_L2_1min.csv"
     file_path = os.path.join(ICOS_CITIES_LEVEL_2, file_name)
     file_lines = len(df) + header_lines
-    site_short_name = site[:4]
+    site_short_name = site
     site_long_name = sites_meta.filter(
-        pl.col("site") == site[:4]).select("site_name").item()
+        pl.col("site") == site).select("site_name").item()
     latitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("latitude").item()
+        pl.col("site") == site).select("latitude").item()
     longitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("longitude").item()
+        pl.col("site") == site).select("longitude").item()
     altitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("elevation").item()
+        pl.col("site") == site).select("elevation").item()
     sampling_height = sites_meta.filter(
-        pl.col("site") == site[:4]).select("height_of_building").item()
+        pl.col("site") == site).select("height_of_building").item()
     start_date = df.select("#Datetime").row(0)[0]
     stop_date = df.select("#Datetime").row(-1)[0]
 
@@ -151,12 +146,7 @@ def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) 
         writer.writerow([f'# LATITUDE: {latitude}'])
         writer.writerow([f'# LONGITUDE: {longitude}'])
         writer.writerow([f'# ALTITUDE: {altitude} m asl'])
-        
-        if site[:4] == "BLUT":
-            writer.writerow([f'# SAMPLING HEIGHTS: {site[-2:]} m agl'])
-        else:
-            writer.writerow([f'# SAMPLING HEIGHTS: {sampling_height} m agl'])
-        
+        writer.writerow([f'# SAMPLING HEIGHTS: {sampling_height} m agl'])
         writer.writerow(['# PARAMETER: co2'])
         writer.writerow([f'# COVERING PERIOD: {start_date} - {stop_date}'])
         writer.writerow(['# TIME INTERVAL: 1 minute'])
@@ -193,17 +183,17 @@ def df_to_L2_1h_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) ->
     file_name = f"{site}_munich_acropolis_L2_1h.csv"
     file_path = os.path.join(ICOS_CITIES_LEVEL_2, file_name)
     file_lines = len(df) + header_lines
-    site_short_name = site[:4]
+    site_short_name = site
     site_long_name = sites_meta.filter(
-        pl.col("site") == site[:4]).select("site_name").item()
+        pl.col("site") == site).select("site_name").item()
     latitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("latitude").item()
+        pl.col("site") == site).select("latitude").item()
     longitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("longitude").item()
+        pl.col("site") == site).select("longitude").item()
     altitude = sites_meta.filter(
-        pl.col("site") == site[:4]).select("elevation").item()
+        pl.col("site") == site).select("elevation").item()
     sampling_height = sites_meta.filter(
-        pl.col("site") == site[:4]).select("height_of_building").item()
+        pl.col("site") == site).select("height_of_building").item()
     start_date = df.select("#Datetime").row(0)[0]
     stop_date = df.select("#Datetime").row(-1)[0]
     
@@ -229,12 +219,7 @@ def df_to_L2_1h_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) ->
         writer.writerow([f'# LATITUDE: {latitude}'])
         writer.writerow([f'# LONGITUDE: {longitude}'])
         writer.writerow([f'# ALTITUDE: {altitude} m asl'])
-        
-        if site[:4] == "BLUT":
-            writer.writerow([f'# SAMPLING HEIGHTS: {site[-2:]} m agl'])
-        else:
-            writer.writerow([f'# SAMPLING HEIGHTS: {sampling_height} m agl'])
-        
+        writer.writerow([f'# SAMPLING HEIGHTS: {sampling_height} m agl'])
         writer.writerow(['# PARAMETER: co2'])
         writer.writerow([f'# COVERING PERIOD: {start_date} - {stop_date}'])
         writer.writerow(['# TIME INTERVAL: hourly'])

@@ -9,14 +9,16 @@ SCHR;Städt. Willi-Graf-Gymnasium Schwabing-West;48.169493;11.571583;510.48;city
 FINR;Rathaus Gemeinde Finsing;48.220508;11.801911;493.90;background;rooftop;15.21;tum:environmental_sensing and_modeling
 SWMR;Stadtwerke München Zentrale Moosach;48.171895;11.532824;508.37;city;rooftop;27.69;tum:environmental_sensing and_modeling
 MAIR;Mittelschule Maisach;48.220476;11.257392;511.93;background;rooftop;15.08;tum:environmental_sensing and_modeling
+MAIR2;Orlando-di-Lasso Realschule;48.220538;11.256069;511.93;background;rooftop;11.00;tum:environmental_sensing and_modeling
 PASR;Städt. Bertolt-Brecht-Gymnasium Pasing;48.141191;11.447062;528.07;city;rooftop;17.96;tum:environmental_sensing and_modeling
 GROR;LMU Klinikum Campus Großhadern;48.114039;11.466741;542.07;city;rooftop;30.40;tum:environmental_sensing and_modeling
 BLUT;Fernmeldeturm Blutenburgstraße;48.147532;11.549808;518.61;city;tower;101.6;tum:environmental_sensing and_modeling
+BLUT_48;Fernmeldeturm Blutenburgstraße;48.147532;11.549808;518.61;city;tower;48.0;tum:environmental_sensing and_modeling
+BLUT_85;Fernmeldeturm Blutenburgstraße;48.147532;11.549808;518.61;city;tower;85.0;tum:environmental_sensing and_modeling
 NPLR;München Klinik Neuperlach;48.094790;11.656115;539.87;city;rooftop;31.43;tum:environmental_sensing and_modeling
 BOGR;München Klinik Bogenhausen;48.155391;11.625420;511.96;city;rooftop;39.46;tum:environmental_sensing and_modeling
 HARR;München Klinik Harlaching;48.086350;11.556439;553.1;city;rooftop;29.30;tum:environmental_sensing and_modeling
 BALR;Michaeli-Gymnasium Berg-am-Laim;48.120765;11.639474;528.0;city;rooftop;18.17;tum:environmental_sensing and_modeling
-UNTR;München Unterföhring Allianz Hauptzentrale;48.187631; 11.650006;499.65;city;rooftop;32.93;tum:environmental_sensing and_modeling
 LOTC;Co-Location LfU Lothstraße;48.154566;11.554620;519.0;lfu_colocation;streetlevel;;tum:environmental_sensing and_modeling
 HANV;Hanauer Straße;48.172732;11.528536;510.0;individual;streetlevel;;tum:environmental_sensing and_modeling
 DOMV;Dom-Pedro-Straße;48.159655;11.537629;520.0;individual;streetlevel;;tum:environmental_sensing and_modeling

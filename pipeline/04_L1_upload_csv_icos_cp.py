@@ -1,4 +1,5 @@
 import os
+import re
 import glob
 import polars as pl
 import time
@@ -48,17 +49,14 @@ logging.info(f"Script started at: {start_datetime}")
 for path in L1_filenames:  
     root_directory = os.path.dirname(path)
     fname = os.path.basename(path)
-    site_id = os.path.basename(path)[:4]
+    site_id = re.match(r'^[^_]+', fname).group()
     
     logging.info(f"Processing site: {site_id}")
 
-    if site_id == 'BLUT':
-        sampling_height = float(os.path.basename(path)[5:7] + '.0')
-    else:
-        sampling_height = float(sites_meta.filter(
+    sampling_height = float(sites_meta.filter(
             pl.col("site") == site_id).select("height_of_building").item())
 
-    logging.info(f"Created {fname}, {site_id}, {sampling_height}")
+    logging.info(f"Collected {fname}, {site_id}, {sampling_height}")
     
     logging.info(f"Uploading {fname} to ICOS Cities Portal")
     

@@ -146,6 +146,15 @@ deployment_times = {
             {
                 "id": 16,
                 "start_time": "2024-02-08T00:00:00+0000",
+                "end_time": "2025-07-21T00:00:00+0000"
+            },
+        ],
+    },
+    "MAIR2": {
+        "sensors": [
+            {
+                "id": 16,
+                "start_time": "2025-07-21T00:00:00+0000",
                 "end_time": current_date
             },
         ],
