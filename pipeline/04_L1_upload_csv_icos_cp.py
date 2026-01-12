@@ -49,7 +49,9 @@ logging.info(f"Script started at: {start_datetime}")
 for path in L1_filenames:  
     root_directory = os.path.dirname(path)
     fname = os.path.basename(path)
-    site_id = re.match(r'^[^_]+', fname).group()
+    m = re.match(r'^[^_]+', fname)
+    assert m is not None
+    site_id = m.group()
     
     logging.info(f"Processing site: {site_id}")
 
