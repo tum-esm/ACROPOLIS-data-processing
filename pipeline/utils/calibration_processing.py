@@ -35,12 +35,15 @@ def two_point_calibration(measured_values: list, true_values: list):
 
     # Calculate calibration parameters (slope and intercept)
 
-    slope = (true_values[1] - true_values[0]) / (measured_values[1] -
-                                                 measured_values[0])
-    # y_true = m * y_meas + t
-    intercept = true_values[0] - slope * measured_values[0]
+    try:
+        slope = (true_values[1] - true_values[0]) / (measured_values[1] -
+                                                    measured_values[0])
+        # y_true = m * y_meas + t
+        intercept = true_values[0] - slope * measured_values[0]
 
-    return {"slope": slope, "intercept": intercept}
+        return {"slope": slope, "intercept": intercept}
+    except ZeroDivisionError:
+        return {"slope": 0.0, "intercept": 0.0}
 
 def calculate_slope_intercept(df: pl.DataFrame) -> pl.DataFrame:
     """
