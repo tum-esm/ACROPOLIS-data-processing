@@ -60,3 +60,17 @@ def import_acropolis_site_data(target_directory: str, deployment_times: dict,
         extracted_dates.append(df_temp)
 
     return pl.concat(extracted_dates, how="diagonal")
+
+def import_manual_flagged_site_data(target_directory, site_name: str) -> pl.DataFrame:
+
+    files = glob.glob(os.path.join(target_directory, '*.parquet'))
+
+    for file in files:  
+        site = os.path.basename(file).split('_')[0]
+        if site == "BLUT":
+            site = os.path.basename(file).split('_')[0] + "_" + os.path.basename(file).split('_')[1]
+        
+        if site == site_name:
+            return pl.read_parquet(file)
+        
+    raise FileNotFoundError(f"No manual flagged file found for site {site_name} in directory {target_directory}")

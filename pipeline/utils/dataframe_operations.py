@@ -73,3 +73,10 @@ def convert_to_1h_icos_cp_format(df: pl.DataFrame) -> pl.DataFrame:
         .select(["#Datetime", "Year", "Month", "Day", "Hour", "Minute", "Second", "DecimalDate", "co2", "h2o", "pressure", "sensor_temperature", "ws", "wd", "NbPoints", "Stdev", "Flag"]) \
         .with_columns(pl.exclude(pl.Utf8).cast(str)) \
         .fill_null('')
+  
+def merge_L1_and_L2_manual_flag(df: pl.DataFrame) -> pl.DataFrame:
+    return df
+        
+def convert_to_L2_1h_icos_cp_format(df: pl.DataFrame) -> pl.DataFrame:
+    return df
+
