@@ -103,7 +103,7 @@ def df_to_L1_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) 
         writer.writerow(field)
 
         for row in df.iter_rows():
-            writer.writerow([''.join(item) for item in row])
+            writer.writerow([str(item) if item is not None else "" for item in row])
 
 def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) -> None:
     header_lines = 46
@@ -176,7 +176,7 @@ def df_to_L2_1min_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) 
         writer.writerow(field)
         
         for row in df.iter_rows():
-            writer.writerow([''.join(item) for item in row])
+            writer.writerow([str(item) if item is not None else "" for item in row])
             
 def df_to_L2_1h_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) -> None:
     header_lines = 45
@@ -248,4 +248,4 @@ def df_to_L2_1h_icos_csv(df:pl.DataFrame, sites_meta: pl.DataFrame, site:str) ->
         writer.writerow(field)
         
         for row in df.iter_rows():
-            writer.writerow([''.join(item) for item in row])
+            writer.writerow([str(item) if item is not None else "" for item in row])
