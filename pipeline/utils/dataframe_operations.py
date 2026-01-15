@@ -75,7 +75,17 @@ def convert_to_1h_icos_cp_format(df: pl.DataFrame) -> pl.DataFrame:
         .fill_null('')
   
 def merge_L1_and_L2_manual_flag(df: pl.DataFrame) -> pl.DataFrame:
-    return df
+    return df.with_columns(
+        pl.when(pl.col("Manual_Flag") == 1)
+        .then(pl.lit("C"))
+        .otherwise(pl.col("Flag"))  # Keep original value for others
+        .alias("Flag")) \
+    .with_columns(
+        pl.when(pl.col("Flag") == "U")
+        .then(pl.lit("O"))
+        .otherwise(pl.col("Flag"))  # Keep original value for others
+        .alias("Flag")) \
+    .drop("Manual_Flag")
         
 def convert_to_L2_1h_icos_cp_format(df: pl.DataFrame) -> pl.DataFrame:
     return df
