@@ -1,6 +1,7 @@
 import polars as pl
 from datetime import timedelta
 from .datetime_conversions import calculate_decimal_year
+import polars.selectors as cs
 from typing import Literal
 
 
@@ -88,5 +89,37 @@ def merge_L1_and_L2_manual_flag(df: pl.DataFrame) -> pl.DataFrame:
     .drop("Manual_Flag")
         
 def convert_to_L2_1h_icos_cp_format(df: pl.DataFrame) -> pl.DataFrame:
-    return df
+    return df.filter(pl.col("Flag") == 'O') \
+        .drop("Flag") \
+        .select(["#Datetime", "co2", "h2o", "pressure", "sensor_temperature", "ws", "wd"]) \
+        .cast({"ws": pl.Float32, "wd": pl.Float32}) \
+        .group_by_dynamic("#Datetime", every='1h') \
+        .agg(cs.numeric().mean(),
+             pl.col("co2").std().alias("Stdev"),
+             pl.col("co2").count().alias("NbPoints")) \
+        .with_columns(pl.when(pl.col("NbPoints") < 40).then(pl.lit('K')).otherwise(pl.lit('O')).alias("Flag")) \
+        .with_columns(
+            pl.col("co2").round(2),
+            pl.col("h2o").round(2),
+            pl.col("pressure").round(2),
+            pl.col("sensor_temperature").round(2),
+            pl.col("ws").round(2),
+            pl.col("wd").round(2),
+            pl.col("Stdev").round(2)) \
+        .with_columns((pl.col("#Datetime") + timedelta(minutes=30))) \
+        .with_columns((pl.col("#Datetime").dt.replace_time_zone("UTC"))) \
+        .with_columns(pl.struct(['#Datetime']) \
+        .map_elements(lambda x: calculate_decimal_year(x['#Datetime']), return_dtype=pl.Float64) \
+        .alias("DecimalDate")) \
+        .with_columns(
+            (pl.col("#Datetime").dt.year()).alias("Year"),
+            (pl.col("#Datetime").dt.month()).alias("Month"),
+            (pl.col("#Datetime").dt.day()).alias("Day"),
+            (pl.col("#Datetime").dt.hour()).alias("Hour"),
+            (pl.col("#Datetime").dt.minute()).alias("Minute"),
+            (pl.col("#Datetime").dt.second()).alias("Second"),
+            (pl.col('#Datetime').dt.to_string("%Y-%m-%d %H:%M:%S")).alias("#Datetime")) \
+        .select(["#Datetime", "Year", "Month", "Day", "Hour", "Minute", "Second", "DecimalDate", "co2", "h2o", "pressure", "sensor_temperature", "ws", "wd", "NbPoints", "Stdev", "Flag"]) \
+        .with_columns(pl.exclude(pl.Utf8).cast(str)) \
+        .fill_null('')
 
