@@ -52,7 +52,7 @@ for site in config["icos_cities_portal"]["site_names"]:
     df = import_manual_flagged_site_data(target_directory=os.path.join(PIPELINE_DATA_DIRECTORY, "manual_flagging"), site_name=site)
 
     # 1min data
-    # Convert DF to ICOS CP format (add additional columns, rename, etc.)
+    # Merge L1 and L2 manual flags
     df = df.pipe(merge_L1_and_L2_manual_flag)
 
     # Write to CSV with ICOS CP Header
