@@ -21,8 +21,13 @@ deployment_times = {
             {
                 "id": 6,
                 "start_time": "2024-7-1T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2025-02-18T00:00:00+0000"
             },
+            {
+                "id": 3,
+                "start_time": "2025-02-18T00:00:00+0000",
+                "end_time": current_date
+            }
         ],
     },
     "TUMRv2": {
