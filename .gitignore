@@ -13,6 +13,9 @@ __pycache__
 .env
 config.json
 
+# dev tools
+dev.ipynb
+
 # folders
 data/input/HPB
 data/input/picarro
