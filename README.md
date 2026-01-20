@@ -58,6 +58,8 @@ python pipeline/01_acropolis_postprocessing.py
 python pipeline/02_timeseries_despiking.py
 python pipeline/03_L1_write_csv_icos_cp.py
 python pipeline/04_L1_upload_csv_icos_cp.py
+python pipeline/06_L2_write_csv_icos_cp.py
+python pipeline/07_L2_upload_csv_icos_cp.py
 ```
 
 
@@ -72,5 +74,6 @@ bash scripts/run_mypy.sh
 
 ## Related Work
 
-Aigner et. al.: Advancing Urban Greenhouse Gas Monitoring: Development and Evaluation of a High-Density CO2 Sensor Network in Munich. ICOS Science Conference 2024, Versailles, France, 10.-12. Sept, [Link](https://www.icos-cp.eu/news-and-events/science-conference/icos2024sc/all-abstracts)
+Aigner, P., Chen, J., Böhm, F., Chariot, M., Emmenegger, L., Frölich, L., Grange, S., Kühbacher, D., Kürzinger, K., Laurent, O., Makowski, M., Rubli, P., Schmitt, A., and Wenzel, A.: ACROPOLIS: Munich Urban CO2 Sensor Network, EGUsphere [preprint], https://doi.org/10.5194/egusphere-2025-4157, 2025.
 
+Aigner et. al.: Advancing Urban Greenhouse Gas Monitoring: Development and Evaluation of a High-Density CO2 Sensor Network in Munich. ICOS Science Conference 2024, Versailles, France, 10.-12. Sept, [Link](https://www.icos-cp.eu/news-and-events/science-conference/icos2024sc/all-abstracts)
