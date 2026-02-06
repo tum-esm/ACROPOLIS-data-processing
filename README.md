@@ -74,6 +74,8 @@ bash scripts/run_mypy.sh
 
 ## Related Work
 
-Aigner, P., Chen, J., Böhm, F., Chariot, M., Emmenegger, L., Frölich, L., Grange, S., Kühbacher, D., Kürzinger, K., Laurent, O., Makowski, M., Rubli, P., Schmitt, A., and Wenzel, A.: ACROPOLIS: Munich Urban CO2 Sensor Network, EGUsphere [preprint], https://doi.org/10.5194/egusphere-2025-4157, 2025.
+📘 **Peer‑reviewed publication (AMT, 2026)**  
+Aigner, P., Chen, J., Böhm, F., Chariot, M., Emmenegger, L., Frölich, L., Grange, S., Kühbacher, D., Kürzinger, K., Laurent, O., Makowski, M., Rubli, P., Schmitt, A., and Wenzel, A.: ACROPOLIS: Munich urban CO2 sensor network, Atmos. Meas. Tech., 19, 745–773, https://doi.org/10.5194/amt-19-745-2026, 2026.
 
-Aigner et. al.: Advancing Urban Greenhouse Gas Monitoring: Development and Evaluation of a High-Density CO2 Sensor Network in Munich. ICOS Science Conference 2024, Versailles, France, 10.-12. Sept, [Link](https://www.icos-cp.eu/news-and-events/science-conference/icos2024sc/all-abstracts)
+🎤 **Conference Talk (ICOS Science Conference, 2024)**  
+Aigner, P., Kühbacher, D., Wenzel, A., Schmitt, A., Böhm, F., Makowski, M., Kürzinger, K., Laurent, O., Rubli, P., Grange, S., Emmenegger, L., and Chen, J.: Advancing Urban Greenhouse Gas Monitoring: Development and Evaluation of a High-Density CO2 Sensor Network in Munich. ICOS Science Conference 2024, Versailles, France, 10.-12. Sept, https://www.icos-cp.eu/news-and-events/science-conference/icos2024sc/all-abstracts
