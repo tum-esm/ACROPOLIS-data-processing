@@ -2,6 +2,8 @@ from datetime import datetime, timezone
 
 # INFO: First two days of deployment are cut due to system warming up and adjusting to new environment
 
+# add current_date for "end_time" if the sensor is currently deployed (i.e., no end_time specified)
+
 datetime_format = "%Y-%m-%dT%H:%M:%S%z"
 current_date = datetime.now(timezone.utc).strftime(datetime_format)
 
@@ -16,17 +18,17 @@ deployment_times = {
             {
                 "id": 4,
                 "start_time": "2024-02-14T00:00:00+0000",
-                "end_time": "2024-7-1T00:00:00+0000"
+                "end_time": "2024-07-01T00:00:00+0000"
             },
             {
                 "id": 6,
-                "start_time": "2024-7-1T00:00:00+0000",
+                "start_time": "2024-07-01T00:00:00+0000",
                 "end_time": "2025-02-18T00:00:00+0000"
             },
             {
                 "id": 3,
                 "start_time": "2025-02-18T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-01-01T00:00:00+0000"
             }
         ],
     },
@@ -35,7 +37,7 @@ deployment_times = {
             {
                 "id": 3,
                 "start_time": "2025-02-18T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-23T00:00:00+0000"
             }
         ],
     },
@@ -49,7 +51,7 @@ deployment_times = {
             {
                 "id": 13,
                 "start_time": "2024-02-22T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2025-10-07T00:00:00+0000"
             },
         ],
     },
@@ -63,7 +65,7 @@ deployment_times = {
             {
                 "id": 12,
                 "start_time": "2024-02-14T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-01-23T00:00:00+0000"
             },
         ],
     },
@@ -77,7 +79,7 @@ deployment_times = {
             {
                 "id": 5,
                 "start_time": "2024-02-28T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-19T00:00:00+0000"
             },
         ],
     },
@@ -86,7 +88,7 @@ deployment_times = {
             {
                 "id": 1,
                 "start_time": "2024-02-29T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-11T00:00:00+0000"
             },
         ],
     },
@@ -100,7 +102,7 @@ deployment_times = {
             {
                 "id": 8,
                 "start_time": "2024-03-15T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-19T00:00:00+0000"
             },
         ],
     },
@@ -109,7 +111,7 @@ deployment_times = {
             {
                 "id": 10,
                 "start_time": "2024-04-11T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-06-04T00:00:00+0000"
             },
         ],
     },
@@ -128,7 +130,7 @@ deployment_times = {
             {
                 "id": 11,
                 "start_time": "2024-04-11T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2025-11-30T00:00:00+0000"
             },
         ],
     },
@@ -137,7 +139,7 @@ deployment_times = {
             {
                 "id": 15,
                 "start_time": "2024-06-14T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-19T00:00:00+0000"
             },
         ],
     },
@@ -160,7 +162,7 @@ deployment_times = {
             {
                 "id": 16,
                 "start_time": "2025-07-21T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2025-11-14T00:00:00+0000"
             },
         ],
     },
@@ -174,7 +176,7 @@ deployment_times = {
             {
                 "id": 18,
                 "start_time": "2024-02-08T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-19T00:00:00+0000"
             },
         ],
     },
@@ -188,7 +190,7 @@ deployment_times = {
             {
                 "id": 20,
                 "start_time": "2024-02-14T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-05-22T00:00:00+0000"
             },
         ],
     },
@@ -197,7 +199,7 @@ deployment_times = {
             {
                 "id": 14,
                 "start_time": "2024-06-23T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-13T00:00:00+0000"
             },
         ],
     },
@@ -206,7 +208,7 @@ deployment_times = {
             {
                 "id": 7,
                 "start_time": "2024-06-23T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-19T00:00:00+0000"
             },
         ],
     },
@@ -215,7 +217,7 @@ deployment_times = {
             {
                 "id": 9,
                 "start_time": "2024-06-26T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2025-11-04T00:00:00+0000"
             },
         ],
     },
@@ -229,7 +231,7 @@ deployment_times = {
             {
                 "id": 2,
                 "start_time": "2025-03-03T11:29:00+0000",
-                "end_time": current_date
+                "end_time": "2026-04-27T00:00:00+0000"
             },
         ],
     },
@@ -238,7 +240,7 @@ deployment_times = {
             {
                 "id": 4,
                 "start_time": "2024-07-30T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2026-02-21T00:00:00+0000"
             },
         ],
     },
@@ -247,7 +249,7 @@ deployment_times = {
             {
                 "id": 19,
                 "start_time": "2024-10-09T00:00:00+0000",
-                "end_time": current_date
+                "end_time": "2025-10-05T00:00:00+0000"
             },
         ],
     },
