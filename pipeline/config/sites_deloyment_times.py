@@ -104,6 +104,12 @@ deployment_times = {
                 "start_time": "2024-03-15T00:00:00+0000",
                 "end_time": "2026-04-19T00:00:00+0000"
             },
+            # after bottle change and calibration turned back on (next morning)
+            {
+                "id": 8,
+                "start_time": "2026-09-09T00:00:00+0000",
+                "end_time": current_date
+            },
         ],
     },
     "SCHR": {
