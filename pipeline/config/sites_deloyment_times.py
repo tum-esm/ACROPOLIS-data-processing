@@ -67,6 +67,12 @@ deployment_times = {
                 "start_time": "2024-02-14T00:00:00+0000",
                 "end_time": "2026-01-23T00:00:00+0000"
             },
+            # after bottle change and calibration turned back on (next morning)
+            {
+                "id": 12,
+                "start_time": "2026-09-11T00:00:00+0000",
+                "end_time": current_date
+            },
         ],
     },
     "DLRR": {
